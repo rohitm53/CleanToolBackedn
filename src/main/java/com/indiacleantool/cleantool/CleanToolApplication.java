@@ -8,6 +8,5 @@ public class CleanToolApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CleanToolApplication.class,args);
-        System.out.println("Nirmal Babaji");
     }
 }
