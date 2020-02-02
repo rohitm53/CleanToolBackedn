@@ -1,5 +1,7 @@
 package com.indiacleantool.cleantool.web.exceptions;
 
+import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeException;
+import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeExceptionResponse;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeExceptionResponse;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,12 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
     public final ResponseEntity<?> handleServiceCodeException(ServiceCodeException ex, WebRequest req){
         ServiceCodeExceptionResponse response = new ServiceCodeExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleEmployeeCodeException(EmployeeCodeException ex, WebRequest req){
+        EmployeeCodeExceptionResponse response = new EmployeeCodeExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
 }
