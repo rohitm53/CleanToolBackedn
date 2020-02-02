@@ -1,0 +1,9 @@
+1. generateEmployeeCode
+
+	DELIMITER $$
+	CREATE PROCEDURE `generateEmployeeCode`(in empId int , out empCode varchar(20))
+	begin
+	update employee set employee_code=concat(lower(first_name),'0',cast(id as char)) where id=empId;
+	select employee_code into empCode  from employee where id=empId;
+	end$$
+	DELIMITER ;
