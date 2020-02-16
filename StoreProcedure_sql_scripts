@@ -7,3 +7,23 @@
 	select employee_code into empCode  from employee where id=empId;
 	end$$
 	DELIMITER ;
+
+2. SP for Deleting employee by employeecode
+
+    DELIMITER $$
+    CREATE  PROCEDURE `deleteEmployeeByCode`(in empCode varchar(50))
+    begin
+    	-- declarring variable
+    	declare employeeId int;
+        declare employeeCredentialId int;
+
+        -- selecting ids into local variable
+        select id into employeeId from employee where employee_code=empCode;
+    	select id into employeeCredentialId from employee_credential where employee_code=empCode;
+
+        -- deleting records by id
+    	Delete from employee where id=employeeId;
+        Delete from employee_credential where id=employeeCredentialId;
+        commit;
+    end$$
+    DELIMITER ;

@@ -16,7 +16,10 @@ import java.util.Date;
                                    parameters = {
                                         @StoredProcedureParameter(mode = ParameterMode.IN,name="empId",type = Long.class),
                                         @StoredProcedureParameter(mode = ParameterMode.OUT,name="empCode",type = String.class)
-                                   })
+                                   }),
+        @NamedStoredProcedureQuery(name = "deleteEmployeeByCode",
+                                   procedureName = "deleteEmployeeByCode",
+                                   parameters = {@StoredProcedureParameter(mode = ParameterMode.IN,name = "empCode",type = String.class)})
 })
 public class Employee  implements Serializable {
 
@@ -162,6 +165,5 @@ public class Employee  implements Serializable {
     protected void onUpdate(){
         this.updated_at=new Date();
     }
-
 
 }

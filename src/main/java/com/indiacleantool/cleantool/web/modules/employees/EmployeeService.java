@@ -1,7 +1,10 @@
 package com.indiacleantool.cleantool.web.modules.employees;
 
+import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.web.domain.employee.Employee;
+import com.indiacleantool.cleantool.web.domain.employee.EmployeeCredential;
 import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeException;
+import com.indiacleantool.cleantool.web.modules.employeecredentials.EmployeeCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +15,23 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository repository;
 
+    @Autowired
+    private EmployeeCredentialService employeeCredentialService;
+
     public Employee saveOrUpdateEmployee(Employee employee){
+
+        Long id = employee.getId();
         Employee savedEmployee = repository.save(employee);
-        String empCode= repository.generateEmployeeCode(savedEmployee.getId());
-        savedEmployee.setEmployeeCode(empCode);
+        if(id==null){
+            String empCode= repository.generateEmployeeCode(savedEmployee.getId());
+            savedEmployee.setEmployeeCode(empCode);
+            EmployeeCredential employeeCredential = new EmployeeCredential();
+            employeeCredential.setEmployeeCode(savedEmployee.getEmployeeCode());
+            employeeCredential.setPassword(Constants.employeePassword);
+            employeeCredentialService.saveOrUpdateEmployeeCredentials(employeeCredential);
+        }
         return savedEmployee;
     }
-
 
     public Employee findByEmployeeCode(String employeeCode){
 
@@ -34,6 +47,9 @@ public class EmployeeService {
     }
 
     public void deleteEmployeeByCode(String employeeCode){
-        repository.delete(findByEmployeeCode(employeeCode));
+        Employee employee = findByEmployeeCode(employeeCode);
+        if(employee!=null){
+            repository.deleteEmployeeByCode(employeeCode);
+        }
     }
 }
