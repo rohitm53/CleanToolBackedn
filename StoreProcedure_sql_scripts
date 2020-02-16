@@ -26,4 +26,5 @@
         Delete from employee_credential where id=employeeCredentialId;
         commit;
     end$$
+	
     DELIMITER ;
