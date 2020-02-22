@@ -1,6 +1,9 @@
 package com.indiacleantool.cleantool.web.modules.companyservice;
 
+import com.indiacleantool.cleantool.web.domain.Services;
 import com.indiacleantool.cleantool.web.domain.companyservice.CompanyService;
+import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
+import com.indiacleantool.cleantool.web.modules.staticservices.StaticServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,15 +16,26 @@ public class CompanyServiceSprService {
     @Autowired
     private CompanyServiceRepository repository;
 
-    public Iterable<CompanyService> saveCompanyService(String compananyCode , List<String> listServiceCode){
+    @Autowired
+    private StaticServiceRepository staticServiceRepository;
 
-        List<CompanyService> listCompanyService = new ArrayList<>();
-        for(String serviceCode : listServiceCode){
-            CompanyService companyService = new CompanyService();
-            companyService.setCompanyCode(compananyCode);
-            companyService.setServiceCode(serviceCode);;
-            listCompanyService.add(companyService);
+    public Iterable<CompanyService> saveCompanyService(String compananyCode , List<String> listServiceCode){
+        try{
+            repository.deleteCompanyServiceByCompanyCode(compananyCode);
+            List<CompanyService> listCompanyService = new ArrayList<>();
+            for(String serviceCode : listServiceCode){
+                CompanyService companyService = new CompanyService();
+                companyService.setCompanyCode(compananyCode);
+                companyService.setServiceCode(serviceCode);;
+                listCompanyService.add(companyService);
+            }
+            return repository.saveAll(listCompanyService);
+        }catch (Exception ex){
+            throw new CompanyServiceException("No Service code list available");
         }
-        return repository.saveAll(listCompanyService);
+    }
+
+    public Iterable<Services> getServicesForCompanybyCompanyCode(String companyCode){
+        return staticServiceRepository.getServicesForCompanybyCompanyCode(companyCode);
     }
 }

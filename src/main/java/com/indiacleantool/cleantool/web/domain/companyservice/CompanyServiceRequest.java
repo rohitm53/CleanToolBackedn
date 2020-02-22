@@ -1,11 +1,14 @@
 package com.indiacleantool.cleantool.web.domain.companyservice;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class CompanyServiceRequest {
 
-   private String companyCode;
-   private List<String> serviceCodes;
+    @NotBlank(message = "Company Code cannot be blank")
+    private String companyCode;
+
+    private List<String> serviceCodes;
 
     public String getCompanyCode() {
         return companyCode;

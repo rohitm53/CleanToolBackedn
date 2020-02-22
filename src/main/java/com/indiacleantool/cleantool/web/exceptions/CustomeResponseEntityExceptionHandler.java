@@ -1,5 +1,7 @@
 package com.indiacleantool.cleantool.web.exceptions;
 
+import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
+import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceExceptionResponse;
 import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeException;
 import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeExceptionResponse;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
@@ -25,6 +27,12 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
     @ExceptionHandler
     public final ResponseEntity<?> handleEmployeeCodeException(EmployeeCodeException ex, WebRequest req){
         EmployeeCodeExceptionResponse response = new EmployeeCodeExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleCompanyServiceException(CompanyServiceException ex , WebRequest req){
+        CompanyServiceExceptionResponse response = new CompanyServiceExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 

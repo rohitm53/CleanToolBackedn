@@ -6,6 +6,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@NamedStoredProcedureQueries({
+        @NamedStoredProcedureQuery(name = "sp_deleteCompanyServiceByCompanyCode",
+                procedureName = "sp_deleteCompanyServiceByCompanyCode",
+                parameters = {
+                    @StoredProcedureParameter(mode = ParameterMode.IN,name = "the_company_code",type = String.class)
+                })
+})
 public class CompanyService {
 
     @Id

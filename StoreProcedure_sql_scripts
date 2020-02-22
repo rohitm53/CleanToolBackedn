@@ -39,3 +39,31 @@
         commit;
     end$$
     DELIMITER ;
+
+3. SP to delete company service by companycode
+
+    delimiter //
+    drop procedure if exists sp_deleteCompanyServiceByCompanyCode;
+    create procedure sp_deleteCompanyServiceByCompanyCode(in the_company_code varchar(20))
+    begin
+        -- declaration
+        declare current_id varchar(10);
+        declare finished boolean default false;
+        declare id_cursor cursor for select id from company_service where company_code=the_company_code;
+        declare continue handler for not found set finished=true;
+
+        open id_cursor;
+            id_loop:loop
+                fetch id_cursor into current_id;
+
+                -- loop terminating handler
+                if finished then
+                    leave id_loop;
+                 end if;
+                 -- main query
+                 delete from company_service where id=current_id;
+            end loop id_loop;
+        close id_cursor	;
+        commit;
+    end//
+delimiter ;
