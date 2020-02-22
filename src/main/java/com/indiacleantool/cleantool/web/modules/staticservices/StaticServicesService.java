@@ -25,9 +25,7 @@ public class StaticServicesService {
     }
 
     public Services findByServiceCode(String serviceCode){
-
         Services services = repository.findByServiceCode(serviceCode.toUpperCase());
-
         if(services==null){
             throw new ServiceCodeException("No Service available with code '"+serviceCode+"'.");
         }

@@ -4,13 +4,22 @@ import java.util.List;
 
 public class CompanyServiceRequest {
 
-    private List<CompanyService> listCompanyServices;
+   private String companyCode;
+   private List<String> serviceCodes;
 
-    public List<CompanyService> getListCompanyServices() {
-        return listCompanyServices;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public void setListCompanyServices(List<CompanyService> listCompanyServices) {
-        this.listCompanyServices = listCompanyServices;
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public List<String> getServiceCodes() {
+        return serviceCodes;
+    }
+
+    public void setServiceCodes(List<String> serviceCodes) {
+        this.serviceCodes = serviceCodes;
     }
 }

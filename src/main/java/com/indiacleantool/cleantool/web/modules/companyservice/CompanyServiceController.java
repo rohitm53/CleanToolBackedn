@@ -22,7 +22,7 @@ public class CompanyServiceController {
 
     @PostMapping
     public ResponseEntity<?> saveCompanyService(@Valid @RequestBody CompanyServiceRequest request , BindingResult bindingResult){
-        return new ResponseEntity<>(service.saveCompanyService(request.getListCompanyServices()), HttpStatus.OK);
+        return new ResponseEntity<>(service.saveCompanyService(request.getCompanyCode(),request.getServiceCodes()), HttpStatus.OK);
     }
 
 }
