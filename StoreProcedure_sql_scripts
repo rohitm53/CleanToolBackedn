@@ -42,28 +42,49 @@
 
 3. SP to delete company service by companycode
 
-    delimiter //
     drop procedure if exists sp_deleteCompanyServiceByCompanyCode;
-    create procedure sp_deleteCompanyServiceByCompanyCode(in the_company_code varchar(20))
+    DELIMITER $$
+    CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_deleteCompanyServiceByCompanyCode`(in the_company_code varchar(20))
     begin
-        -- declaration
-        declare current_id varchar(10);
+    	-- declaration
+    	declare current_id varchar(10) ;
+        declare count int default 0;
+        declare counter int default 0;
+        declare str_ids varchar(50) default "";
+        declare delete_query varchar(500) default null;
         declare finished boolean default false;
-        declare id_cursor cursor for select id from company_service where company_code=the_company_code;
-        declare continue handler for not found set finished=true;
+    	declare id_cursor cursor for select id from company_service where company_code=the_company_code;
+        declare continue handler for not found set finished :=true;
 
-        open id_cursor;
-            id_loop:loop
-                fetch id_cursor into current_id;
+       select count(*) into count from company_service where company_code=the_company_code;
 
-                -- loop terminating handler
-                if finished then
-                    leave id_loop;
-                 end if;
-                 -- main query
-                 delete from company_service where id=current_id;
-            end loop id_loop;
-        close id_cursor	;
-        commit;
-    end//
-delimiter ;
+       if count > 0 then
+    		open id_cursor;
+    			id_loop:loop
+    				fetch id_cursor into current_id;
+    				-- loop terminating handler
+    				if finished then
+    					set str_ids := concat(str_ids,")");
+    					leave id_loop;
+    				end if;
+
+    				if counter=0 then
+    					 set str_ids := concat(str_ids,"(",current_id);
+    				else
+    					 set str_ids := concat(str_ids,",",current_id);
+    				end if;
+    				set counter := counter+1;
+    			end loop id_loop;
+    		close id_cursor	;
+
+    		set delete_query := concat("delete from company_service where id in",str_ids);
+    		set @delete_query = delete_query;
+    		prepare stmt from @delete_query;
+    		execute stmt;
+    		deallocate prepare stmt;
+        else
+    		select "No data to delete";
+       end if;
+    commit;
+    end$$
+    DELIMITER ;

@@ -26,7 +26,7 @@ public class CompanyServiceSprService {
             for(String serviceCode : listServiceCode){
                 CompanyService companyService = new CompanyService();
                 companyService.setCompanyCode(compananyCode);
-                companyService.setServiceCode(serviceCode);;
+                companyService.setServiceCode(serviceCode);
                 listCompanyService.add(companyService);
             }
             return repository.saveAll(listCompanyService);
