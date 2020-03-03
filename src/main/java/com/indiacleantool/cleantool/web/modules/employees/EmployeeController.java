@@ -20,7 +20,7 @@ public class EmployeeController {
     @Autowired
     private MapValidationExceptionService mapValidationExceptionService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> createOrSaveEmployee(@Valid @RequestBody Employee employee , BindingResult result){
 
         ResponseEntity<?> errorMap = mapValidationExceptionService.validateRESTRequest(result);

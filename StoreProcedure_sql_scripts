@@ -88,3 +88,48 @@
     commit;
     end$$
     DELIMITER ;
+
+4. SP to delete employee service by companycode.
+    DELIMITER //
+    drop procedure if exists sp_deleteEmployeeServiceByCompanyCode;
+    create procedure sp_deleteEmployeeServiceByCompanyCode(in the_companyCode varchar(20))
+    begin
+        declare current_id varchar(10);
+        declare count int default 0;
+        declare counter int default 0;
+        declare str_ids varchar(50) default "";
+        declare delete_query varchar(500) default null;
+        declare finished boolean default false;
+        declare id_cursor cursor for select id from employee_service where company_code=the_companyCode;
+        declare continue handler for not found set finished:=true;
+
+        select count(*) into count from employee_service where company_code=the_companyCode;
+        if count > 0 then
+            open id_cursor;
+            id_loop:loop
+                fetch id_cursor into current_id;
+                if finished then
+                    set str_ids := concat(str_ids,")");
+                    leave id_loop;
+                end if;
+                if counter=0 then
+                    set str_ids := concat(str_ids,"(",current_id);
+                else
+                    set str_ids := concat(str_ids,",",current_id);
+                end if;
+                set counter := counter+1;
+            end loop id_loop;
+            close id_cursor;
+            set delete_query := concat("delete from employee_service where id in ",str_ids);
+            set @delete_query =  delete_query;
+            prepare stmt from @delete_query;
+            execute stmt;
+            deallocate prepare stmt;
+         else
+            select "No Data available to delete";
+        end if;
+        commit;
+    end//
+    DELIMITER ;
+    drop procedure sp_deleteEmployeeServiceByCompanyCode;
+    call sp_deleteEmployeeServiceByCompanyCode("WINIT");
