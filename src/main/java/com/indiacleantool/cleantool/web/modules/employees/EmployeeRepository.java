@@ -14,6 +14,8 @@ public interface EmployeeRepository extends CrudRepository<Employee,Long> {
 
     Employee findByEmployeeCode(String employeeCode);
 
+    Iterable<Employee> findAllByCompanyCode(String companyCode);
+
     @Procedure(name = "deleteEmployeeByCode")
     void deleteEmployeeByCode(@Param("empCode") String empCode);
 

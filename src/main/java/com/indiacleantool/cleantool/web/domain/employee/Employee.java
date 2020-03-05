@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
@@ -53,6 +54,9 @@ public class Employee  implements Serializable {
     private String address;
 
     private String employeeCode;
+
+    @NotBlank(message = "Company code cannot be blank")
+    private String companyCode;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
@@ -154,6 +158,14 @@ public class Employee  implements Serializable {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
     }
 
     @PrePersist
