@@ -99,7 +99,7 @@ CREATE TABLE `services` (
 
 LOCK TABLES `services` WRITE;
 /*!40000 ALTER TABLE `services` DISABLE KEYS */;
-INSERT INTO `services` VALUES (1,'2020-02-17 11:42:25',1,'OC','Office Cleaning',NULL),(2,'2020-02-17 11:43:00',2,'HC','House Cleaning',NULL),(3,'2020-02-17 11:43:15',5,'AFC','After Party Cleaning',NULL),(4,'2020-02-17 11:43:28',5,'CC','Car Cleaning',NULL),(5,'2020-02-17 11:43:56',5,'TC','Toilet Cleaning',NULL),(6,'2020-02-17 11:44:59',2,'BC','Basic Cleaning',NULL),(7,'2020-02-17 11:45:18',4,'MIC','Move in Cleaning',NULL),(8,'2020-02-17 11:45:31',5,'MOC','Move Out Cleaning',NULL),(9,'2020-02-17 11:47:06',1,'MC','Mat Cleaning',NULL),(10,'2020-02-17 11:47:54',2,'CW','Cloth Wash',NULL),(11,'2020-02-17 11:48:26',1,'VW','Vehicle Cleaning',NULL);
+INSERT INTO `services` VALUES (1,'2020-02-17 11:42:25',1,'OC','Office Cleaning',NULL),(2,'2020-02-17 11:43:00',2,'HC','House Cleaning',NULL),(3,'2020-02-17 11:43:15',5,'APC','After Party Cleaning',NULL),(4,'2020-02-17 11:43:28',5,'CC','Car Cleaning',NULL),(5,'2020-02-17 11:43:56',5,'TC','Toilet Cleaning',NULL),(6,'2020-02-17 11:44:59',2,'BC','Basic Cleaning',NULL),(7,'2020-02-17 11:45:18',4,'MIC','Move in Cleaning',NULL),(8,'2020-02-17 11:45:31',5,'MOC','Move Out Cleaning',NULL),(9,'2020-02-17 11:47:06',1,'MC','Mat Cleaning',NULL),(10,'2020-02-17 11:47:54',2,'CW','Cloth Wash',NULL),(11,'2020-02-17 11:48:26',1,'VW','Vehicle Cleaning',NULL);
 /*!40000 ALTER TABLE `services` ENABLE KEYS */;
 UNLOCK TABLES;
 
