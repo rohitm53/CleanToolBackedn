@@ -30,6 +30,8 @@ public class Employee  implements Serializable {
     @NotBlank(message = "First Name cannot be blank")
     private String firstName;
 
+    private String middleName;
+
     @NotBlank(message = "Last Name cannot be blank")
     private String lastName;
 
@@ -53,10 +55,19 @@ public class Employee  implements Serializable {
     @NotBlank(message = "Adress cannot be blank")
     private String address;
 
-    private String employeeCode;
+    @NotBlank(message = "City cannot be blank")
+    private String city;
+
+    @NotBlank(message = "Country cannot be blank")
+    private String country;
+
+    @NotBlank(message = "Pincode cannot be blank")
+    private String pinCode;
 
     @NotBlank(message = "Company code cannot be blank")
     private String companyCode;
+
+    private String employeeCode;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
@@ -166,6 +177,38 @@ public class Employee  implements Serializable {
 
     public void setCompanyCode(String companyCode) {
         this.companyCode = companyCode;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getPinCode() {
+        return pinCode;
+    }
+
+    public void setPinCode(String pinCode) {
+        this.pinCode = pinCode;
     }
 
     @PrePersist
