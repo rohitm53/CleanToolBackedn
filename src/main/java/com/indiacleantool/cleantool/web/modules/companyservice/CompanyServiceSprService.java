@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.modules.companyservice;
 
-import com.indiacleantool.cleantool.web.domain.Services;
+import com.indiacleantool.cleantool.web.domain.staticservice.Services;
 import com.indiacleantool.cleantool.web.domain.companyservice.CompanyService;
 import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
 import com.indiacleantool.cleantool.web.modules.staticservices.StaticServiceRepository;

@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.domain;
+package com.indiacleantool.cleantool.web.domain.staticservice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.modules.staticservices;
 
-import com.indiacleantool.cleantool.web.domain.Services;
+import com.indiacleantool.cleantool.web.domain.staticservice.Services;
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
