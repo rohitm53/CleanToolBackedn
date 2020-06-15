@@ -1,6 +1,7 @@
 package com.indiacleantool.cleantool.web.domain.employee;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
 
 import javax.persistence.*;
@@ -71,6 +72,7 @@ public class Employee  {
     private String employeeCode;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "employee")
+    @JsonIgnore
     private UserCredentials userCredentials;
 
     @JsonFormat(pattern = "yyyy-mm-dd")

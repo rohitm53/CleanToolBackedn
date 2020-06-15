@@ -1,5 +1,6 @@
 package com.indiacleantool.cleantool.web.domain.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.indiacleantool.cleantool.web.domain.employee.Employee;
 
 import javax.persistence.*;
@@ -21,10 +22,12 @@ public class UserCredentials {
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private Employee employee;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "company_id")
+    @JsonIgnore
     private Company company;
 
     public UserCredentials() {

@@ -16,4 +16,9 @@ public class SecurityConstants {
     public static final String ROLE_EMPLOYEE="EMPLOYEE";
     public static final String ROLE_MOBILE_USER="MOBILE_USER";
 
+
+    public static final String HEADER_STRING = "Authorization";
+    public static final String TOKEN_PREFIX = "Bearer "; //need to have spacr after Bearer
+    public static final long   EXPIRATION_TIME = 30_0000;
+
 }

@@ -1,9 +1,6 @@
 package com.indiacleantool.cleantool.usermanagment;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -37,19 +34,36 @@ public class JwtUtil {
         return createToken(claims,userDetails.getUsername());
     }
 
-    private Boolean isTokenExpired(String token){
+    public Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
     private String createToken(Map<String,Object> claims , String subject){
-        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-               .setExpiration(new Date(System.currentTimeMillis()+300000))
-               .signWith(SignatureAlgorithm.HS256,SECRET_KEY).compact();
+        return Jwts.builder().setClaims(claims)
+                             .setSubject(subject)
+                             .setIssuedAt(new Date(System.currentTimeMillis()))
+                             .setExpiration(new Date(System.currentTimeMillis()+300000))
+                             .signWith(SignatureAlgorithm.HS256,SECRET_KEY)
+                     .compact();
     }
 
-    public Boolean validateToken(String token,UserDetails userDetails){
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    public boolean validateJwtToken(String jwtToken){
+
+        try{
+            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(jwtToken);
+            return true;
+        }catch (SignatureException e){
+            System.out.println("Invalid JWT Signature");
+        }catch (MalformedJwtException e){
+            System.out.println("Invalid JWT Token");
+        }catch (ExpiredJwtException e){
+            System.out.println("Expired JWT Token");
+        }catch (UnsupportedJwtException e){
+            System.out.println("Unsupported JWT Token");
+        }catch (IllegalArgumentException e){
+            System.out.println("JWT claims string is empty");
+        }
+        return false;
     }
 
 }

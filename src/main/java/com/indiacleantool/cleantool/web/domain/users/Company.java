@@ -1,5 +1,7 @@
 package com.indiacleantool.cleantool.web.domain.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -27,6 +29,7 @@ public class Company {
     private String email;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "company")
+    @JsonIgnore
     private UserCredentials userCredentials;
 
     public Company() {
