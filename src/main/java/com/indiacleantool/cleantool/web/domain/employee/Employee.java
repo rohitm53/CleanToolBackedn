@@ -1,6 +1,7 @@
 package com.indiacleantool.cleantool.web.domain.employee;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ import java.util.Date;
                                    procedureName = "deleteEmployeeByCode",
                                    parameters = {@StoredProcedureParameter(mode = ParameterMode.IN,name = "empCode",type = String.class)})
 })
-public class Employee  implements Serializable {
+public class Employee  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,6 +69,9 @@ public class Employee  implements Serializable {
     private String companyCode;
 
     private String employeeCode;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "employee")
+    private UserCredentials userCredentials;
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_at;
@@ -209,6 +213,14 @@ public class Employee  implements Serializable {
 
     public void setPinCode(String pinCode) {
         this.pinCode = pinCode;
+    }
+
+    public UserCredentials getUserCredentials() {
+        return userCredentials;
+    }
+
+    public void setUserCredentials(UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 
     @PrePersist

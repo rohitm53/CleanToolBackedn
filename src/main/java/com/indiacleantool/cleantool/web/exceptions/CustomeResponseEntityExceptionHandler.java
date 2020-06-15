@@ -11,6 +11,7 @@ import com.indiacleantool.cleantool.web.exceptions.employeeservice.EmployeeServi
 import com.indiacleantool.cleantool.web.exceptions.employeeservice.EmployeeServiceExceptionResponse;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeExceptionResponse;
+import com.indiacleantool.cleantool.web.exceptions.userexception.company.CompanyCodeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,6 +23,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @RestController
 public class CustomeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleCompanyCodeException(CompanyCodeException ex,WebRequest req){
+        CompanyServiceExceptionResponse response = new CompanyServiceExceptionResponse(ex.getMessage());
+        return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler
     public final ResponseEntity<?> handleServiceCodeException(ServiceCodeException ex, WebRequest req){
