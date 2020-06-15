@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/companyservice")
+@RequestMapping("/api/company/companyservice")
 public class CompanyServiceController {
 
     @Autowired
