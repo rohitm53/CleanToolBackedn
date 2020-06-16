@@ -12,8 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -26,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private AppUserDetailService myUserDetailService;
+    private AppUserDetailService appUserDetailService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
@@ -34,9 +33,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(myUserDetailService);
+        auth.userDetailsService(appUserDetailService).passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
@@ -45,7 +47,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                    .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                    .and()
-                       .authorizeRequests().antMatchers(SecurityConstants.COMMON_USER_ENDPOINT,SecurityConstants.STATIC_SERVICE_ENDPOINT).permitAll()
+                       .authorizeRequests().antMatchers(
+                                "/",
+                                "/favicon.ico",
+                                "/**/*.png",
+                                "/**/*.gif",
+                                "/**/*.svg",
+                                "/**/*.jpg",
+                                "/**/*.html",
+                                "/**/*.css",
+                                "/**/*.js"
+                        ).permitAll()
+                       .antMatchers(SecurityConstants.COMMON_USER_ENDPOINT,SecurityConstants.STATIC_SERVICE_ENDPOINT).permitAll()
                        .antMatchers(SecurityConstants.COMPANY_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY)
                        .antMatchers(SecurityConstants.MOBILE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_MOBILE_USER)
                        .antMatchers(SecurityConstants.EMPLOYEE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_EMPLOYEE)
@@ -61,8 +74,4 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }
 }

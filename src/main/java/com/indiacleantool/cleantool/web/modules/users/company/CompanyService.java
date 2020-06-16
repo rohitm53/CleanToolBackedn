@@ -8,6 +8,7 @@ import com.indiacleantool.cleantool.web.domain.users.Role;
 import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
 import com.indiacleantool.cleantool.web.exceptions.userexception.company.CompanyCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,9 @@ public class CompanyService {
     @Autowired
     private UserCredentialsRepository userCredentialsRepository;
 
-    @Transactional(rollbackFor = Exception.class)
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public Company saveOrUpdateCompany(Company company){
 
         Company updatedCompany=null;
@@ -32,6 +35,7 @@ public class CompanyService {
                 updatedCompany=companyRepository.save(company);
 
                 UserCredentials userCredentials = new UserCredentials(company.getCompanyCode(), Constants.InitialPassword);
+                userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));//encrypting password
                 List<Role> roles = new ArrayList<>();
                 roles.add(new Role(SecurityConstants.ROLE_COMPANY));
                 userCredentials.setRoles(roles);
