@@ -38,4 +38,8 @@ public class CompanyServiceSprService {
     public Iterable<Services> getServicesForCompanybyCompanyCode(String companyCode){
         return staticServiceRepository.getServicesForCompanybyCompanyCode(companyCode);
     }
+
+    public Long getCountByCompanyCode(String companyCode){
+        return repository.countByCompanyCode(companyCode);
+    }
 }

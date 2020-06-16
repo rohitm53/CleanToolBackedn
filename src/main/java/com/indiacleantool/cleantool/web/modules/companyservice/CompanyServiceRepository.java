@@ -12,4 +12,6 @@ public interface CompanyServiceRepository extends CrudRepository<CompanyService,
 
     @Procedure(name = "sp_deleteCompanyServiceByCompanyCode")
     void deleteCompanyServiceByCompanyCode(@Param("the_company_code") String companyCode);
+
+    long countByCompanyCode(String companyCode);
 }

@@ -37,4 +37,8 @@ public class AssetService {
         assetRepository.delete(getAssetByCode(code));
     }
 
+    public Long getCountByCompanyCode(String companyCode){
+        return assetRepository.countByCompanyCode(companyCode);
+    }
+
 }

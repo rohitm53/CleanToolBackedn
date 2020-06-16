@@ -10,4 +10,6 @@ public interface AssetRepository extends CrudRepository<Asset,Long> {
     Asset findByCode(String code);
 
     Iterable<Asset> findByCompanyCode(String companyCode);
+
+    long countByCompanyCode(String companyCode);
 }

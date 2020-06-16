@@ -66,4 +66,8 @@ public class EmployeeService {
             repository.delete(employee);
         }
     }
+
+    public Long getCountByCompanyCode(String companyCode){
+        return repository.countByCompanyCode(companyCode);
+    }
 }

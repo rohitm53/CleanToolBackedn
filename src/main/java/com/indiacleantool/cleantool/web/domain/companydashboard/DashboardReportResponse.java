@@ -2,40 +2,37 @@ package com.indiacleantool.cleantool.web.domain.companydashboard;
 
 public class DashboardReportResponse {
 
-    private Integer serviceCount=0;
-    private Integer employeeCount=0;
-    private Integer assetCount=0;
+    private Long serviceCount;
+    private Long employeeCount;
+    private Long assetCount;
 
     public DashboardReportResponse() {
     }
 
-    public DashboardReportResponse(Integer serviceCount, Integer employeeCount, Integer assetCount) {
+    public DashboardReportResponse(Long serviceCount, Long employeeCount, Long assetCount) {
         this.serviceCount = serviceCount;
         this.employeeCount = employeeCount;
         this.assetCount = assetCount;
     }
 
-    public Integer getServiceCount() {
+    public Long getServiceCount() {
         return serviceCount;
     }
 
-    public void setServiceCount(Integer serviceCount) {
+    public void setServiceCount(Long serviceCount) {
         this.serviceCount = serviceCount;
     }
 
-    public Integer getEmployeeCount() {
+    public Long getEmployeeCount() {
         return employeeCount;
     }
 
-    public void setEmployeeCount(Integer employeeCount) {
+    public void setEmployeeCount(Long employeeCount) {
         this.employeeCount = employeeCount;
     }
 
-    public Integer getAssetCount() {
+    public Long getAssetCount() {
         return assetCount;
     }
 
-    public void setAssetCount(Integer assetCount) {
-        this.assetCount = assetCount;
-    }
 }

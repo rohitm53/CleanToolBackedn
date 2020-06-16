@@ -19,6 +19,8 @@ public interface EmployeeRepository extends CrudRepository<Employee,Long> {
 //    @Procedure(name = "deleteEmployeeByCode")
 //    void deleteEmployeeByCode(@Param("empCode") String empCode);
 
+    long countByCompanyCode(String companyCode);
+
 
 
 
