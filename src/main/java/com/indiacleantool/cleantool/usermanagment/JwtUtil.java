@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import static com.indiacleantool.cleantool.security.SecurityConstants.EXPIRATION_TIME;
+
 @Component
 public class JwtUtil {
 
@@ -42,7 +44,7 @@ public class JwtUtil {
         return Jwts.builder().setClaims(claims)
                              .setSubject(subject)
                              .setIssuedAt(new Date(System.currentTimeMillis()))
-                             .setExpiration(new Date(System.currentTimeMillis()+300000))
+                             .setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
                              .signWith(SignatureAlgorithm.HS256,SECRET_KEY)
                      .compact();
     }

@@ -1,8 +1,13 @@
 package com.indiacleantool.cleantool.web.domain.users.login;
 
+import javax.validation.constraints.NotBlank;
+
 public class LoginRequest {
 
+    @NotBlank(message = "User name cannot be blank")
     private String username;
+
+    @NotBlank(message = "Password cannot be blank")
     private String password;
 
     public LoginRequest() {
