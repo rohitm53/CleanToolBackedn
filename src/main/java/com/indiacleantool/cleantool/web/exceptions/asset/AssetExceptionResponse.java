@@ -2,17 +2,17 @@ package com.indiacleantool.cleantool.web.exceptions.asset;
 
 public class AssetExceptionResponse {
 
-    private String error;
+    private String code;
 
-    public AssetExceptionResponse(String error) {
-        this.error = error;
+    public AssetExceptionResponse(String code) {
+        this.code = code;
     }
 
-    public String getError() {
-        return error;
+    public String getCode() {
+        return code;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

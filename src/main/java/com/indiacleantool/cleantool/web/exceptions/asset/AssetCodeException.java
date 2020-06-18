@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class AssetException extends RuntimeException {
+public class AssetCodeException extends RuntimeException {
 
-    public AssetException(String message) {
+    public AssetCodeException(String message) {
         super(message);
     }
 }
