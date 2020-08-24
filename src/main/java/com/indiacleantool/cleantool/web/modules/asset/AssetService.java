@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.web.modules.asset;
 
 import com.indiacleantool.cleantool.web.domain.assets.Asset;
-import com.indiacleantool.cleantool.web.exceptions.asset.AssetException;
+import com.indiacleantool.cleantool.web.exceptions.asset.AssetCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class AssetService {
         try{
             return assetRepository.save(asset);
         }catch (Exception e){
-            throw new AssetException("Asset code : "+asset.getCode()+" , already existed");
+            throw new AssetCodeException("Asset code : "+asset.getCode()+" , already existed");
         }
     }
     public Iterable<Asset> getAllAssets(){
@@ -28,7 +28,7 @@ public class AssetService {
     public Asset getAssetByCode(String code){
         Asset asset = assetRepository.findByCode(code);
         if(asset==null){
-            throw new AssetException("Asset with code :"+code+", does not exist");
+            throw new AssetCodeException("Asset with code :"+code+", does not exist");
         }
         return asset;
     }

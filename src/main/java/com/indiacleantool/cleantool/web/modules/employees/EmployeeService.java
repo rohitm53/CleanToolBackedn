@@ -8,6 +8,7 @@ import com.indiacleantool.cleantool.web.domain.users.Role;
 import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
 import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +24,9 @@ public class EmployeeService {
     @Autowired
     private UserCredentialsRepository userCredentialsRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public Employee saveOrUpdateEmployee(Employee employee){
 
         Long id = employee.getId();
@@ -32,6 +36,7 @@ public class EmployeeService {
             savedEmployee.setEmployeeCode(empCode);
 
             UserCredentials userCredentials = new UserCredentials(empCode,Constants.InitialPassword);
+            userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));
             List<Role> roles = new ArrayList<>();
             Role role = new Role(SecurityConstants.ROLE_EMPLOYEE);
             roles.add(role);

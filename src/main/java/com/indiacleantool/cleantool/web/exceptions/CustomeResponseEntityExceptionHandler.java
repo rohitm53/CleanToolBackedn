@@ -1,7 +1,6 @@
 package com.indiacleantool.cleantool.web.exceptions;
 
-import com.indiacleantool.cleantool.web.domain.assets.Asset;
-import com.indiacleantool.cleantool.web.exceptions.asset.AssetException;
+import com.indiacleantool.cleantool.web.exceptions.asset.AssetCodeException;
 import com.indiacleantool.cleantool.web.exceptions.asset.AssetExceptionResponse;
 import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
 import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceExceptionResponse;
@@ -55,7 +54,7 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
     }
 
     @ExceptionHandler
-    public final ResponseEntity<?> handleAssetException(AssetException ex , WebRequest req){
+    public final ResponseEntity<?> handleAssetException(AssetCodeException ex , WebRequest req){
         AssetExceptionResponse response = new AssetExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
