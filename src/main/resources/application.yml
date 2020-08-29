@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active: test,commondb
+
+
+---
+spring:
+    profiles : dev
+    datasource:
+      username : root
+      password : 123456Aa
+
+---
+spring:
+  profiles : test
+  datasource:
+    url: jdbc:mysql://localhost:3306/testcleanmasterdb
+    username : root
+    password : 123456Aa
+
+
+---
+spring:
+  profiles : commondb
+  datasource :
+    driver-class-name : com.mysql.jdbc.Driver
+  jpa:
+    database-platform : org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true

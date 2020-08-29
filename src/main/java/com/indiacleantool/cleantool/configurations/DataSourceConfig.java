@@ -1,6 +1,7 @@
 package com.indiacleantool.cleantool.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,19 +11,28 @@ import org.springframework.core.env.Environment;
 import javax.sql.DataSource;
 
 @Configuration
-@PropertySource("classpath:application.properties")
 public class DataSourceConfig {
 
-    @Autowired
-    private Environment environment;
+    @Value("${spring.datasource.driver-class-name}")
+    private String datasource;
+
+    @Value("${spring.datasource.url}")
+    private String datasourceUrl;
+
+    @Value("${spring.datasource.username}")
+    private String username;
+
+    @Value("${spring.datasource.password}")
+    private String password;
+
 
     @Bean
     public DataSource getDataSource(){
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName(environment.getProperty("spring.datasource.driver-class-name"));
-        dataSourceBuilder.url(environment.getProperty("spring.datasource.url"));
-        dataSourceBuilder.username(environment.getProperty("spring.datasource.username"));
-        dataSourceBuilder.password(environment.getProperty("spring.datasource.password"));
+        dataSourceBuilder.driverClassName(datasource);
+        dataSourceBuilder.url(datasourceUrl);
+        dataSourceBuilder.username(username);
+        dataSourceBuilder.password(password);
         return dataSourceBuilder.build();
     }
 }
