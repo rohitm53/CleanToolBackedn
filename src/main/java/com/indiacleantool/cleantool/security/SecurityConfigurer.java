@@ -58,6 +58,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                                 "/**/*.css",
                                 "/**/*.js"
                         ).permitAll()
+                       .antMatchers(SecurityConstants.ACTUATOR_ENDPOINT).permitAll()
                        .antMatchers(SecurityConstants.COMMON_USER_ENDPOINT,SecurityConstants.STATIC_SERVICE_ENDPOINT).permitAll()
                        .antMatchers(SecurityConstants.COMPANY_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY)
                        .antMatchers(SecurityConstants.MOBILE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_MOBILE_USER)

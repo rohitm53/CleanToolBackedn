@@ -4,6 +4,7 @@ public class SecurityConstants {
 
     public static final String COMMON_USER_ENDPOINT="/api/users/**";
     public static final String STATIC_SERVICE_ENDPOINT="/api/services/**";
+    public static final String ACTUATOR_ENDPOINT="/actuator/**";
 
 
     //API information in wild card formats

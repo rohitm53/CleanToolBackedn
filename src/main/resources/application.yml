@@ -1,12 +1,18 @@
 spring:
   profiles:
-    active: test,commondb
+    active: dev,commondb
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 
 ---
 spring:
     profiles : dev
     datasource:
+      url: jdbc:mysql://localhost:3306/cleanmasterdb
       username : root
       password : 123456Aa
 
