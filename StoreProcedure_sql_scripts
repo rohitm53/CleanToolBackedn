@@ -133,3 +133,17 @@
     DELIMITER ;
     drop procedure sp_deleteEmployeeServiceByCompanyCode;
     call sp_deleteEmployeeServiceByCompanyCode("WINIT");
+
+5. SP to create Mobile user code generateMobileUserCode
+DELIMITER $$
+
+    create procedure generateMobileUserCode (in mobile_user_id int , out out_mobile_user_code varchar(50))
+    begin
+		update mobile_user set mobile_user_code=concat(lower(first_name),'0',cast(id as char)) where id=mobile_user_id;
+		select mobile_user_code into out_mobile_user_code from mobile_user where id=mobile_user_id;
+    end $$
+
+DELIMITER ;
+
+set @out_mobile_user_code:=""
+call generateMobileUserCode(1,@out_mobile_user_code);

@@ -37,6 +37,7 @@ public class AppUserDetailService implements UserDetailsService {
                 SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(getSpringConfigureRole(roleName));
                 authorities.add(grantedAuthority);
             }
+
         }
         return new User(username,userCredentials.getPassword(),authorities);
     }

@@ -23,7 +23,7 @@ import java.util.Date;
                                    procedureName = "deleteEmployeeByCode",
                                    parameters = {@StoredProcedureParameter(mode = ParameterMode.IN,name = "empCode",type = String.class)})
 })
-public class Employee  {
+public class    Employee  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

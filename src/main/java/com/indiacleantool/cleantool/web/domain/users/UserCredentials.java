@@ -2,6 +2,7 @@ package com.indiacleantool.cleantool.web.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.indiacleantool.cleantool.web.domain.employee.Employee;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.util.List;
@@ -29,6 +30,11 @@ public class UserCredentials {
     @JoinColumn(name = "company_id")
     @JsonIgnore
     private Company company;
+
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinColumn(name = "mobile_user_id")
+    @JsonIgnore
+    private MobileUser mobileUser;
 
     public UserCredentials() {
     }
@@ -84,5 +90,13 @@ public class UserCredentials {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public MobileUser getMobileUser() {
+        return mobileUser;
+    }
+
+    public void setMobileUser(MobileUser mobileUser) {
+        this.mobileUser = mobileUser;
     }
 }
