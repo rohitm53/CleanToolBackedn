@@ -2,19 +2,18 @@ package com.indiacleantool.cleantool.web.domain.employee;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
+import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @NamedStoredProcedureQueries({
-        @NamedStoredProcedureQuery(name="generateEmployeeCode",
-                                   procedureName = "generateEmployeeCode",
+        @NamedStoredProcedureQuery(name="sp_generateEmployeeCode",
+                                   procedureName = "sp_generateEmployeeCode",
                                    parameters = {
                                         @StoredProcedureParameter(mode = ParameterMode.IN,name="empId",type = Long.class),
                                         @StoredProcedureParameter(mode = ParameterMode.OUT,name="empCode",type = String.class)
@@ -23,7 +22,7 @@ import java.util.Date;
                                    procedureName = "deleteEmployeeByCode",
                                    parameters = {@StoredProcedureParameter(mode = ParameterMode.IN,name = "empCode",type = String.class)})
 })
-public class    Employee  {
+public class Employee  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

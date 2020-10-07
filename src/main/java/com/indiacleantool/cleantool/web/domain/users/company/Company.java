@@ -28,6 +28,11 @@ public class Company {
     @NotBlank(message = "Company email cannot be blank")
     private String email;
 
+    private Double latitude;
+
+    private Double longitude;
+
+
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "company")
     @JsonIgnore
     private UserCredentials userCredentials;
@@ -35,12 +40,15 @@ public class Company {
     public Company() {
     }
 
-    public Company(long id, String companyCode, String companyName, String address, String email) {
+    public Company(long id, String companyCode, String companyName, String address,
+                   String email,Double latitude,Double longitude) {
         this.id = id;
         this.companyCode = companyCode;
         this.companyName = companyName;
         this.address = address;
         this.email = email;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
 
     public Long getId() {
@@ -81,6 +89,22 @@ public class Company {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public UserCredentials getUserCredentials() {
