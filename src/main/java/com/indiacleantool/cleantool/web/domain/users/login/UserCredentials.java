@@ -1,8 +1,9 @@
-package com.indiacleantool.cleantool.web.domain.users;
+package com.indiacleantool.cleantool.web.domain.users.login;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.indiacleantool.cleantool.web.domain.employee.Employee;
-import org.springframework.data.repository.cdi.Eager;
+import com.indiacleantool.cleantool.web.domain.users.employee.Employee;
+import com.indiacleantool.cleantool.web.domain.users.company.Company;
+import com.indiacleantool.cleantool.web.domain.users.mobileuser.MobileUser;
 
 import javax.persistence.*;
 import java.util.List;

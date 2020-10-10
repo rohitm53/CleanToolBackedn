@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.domain.employee;
+package com.indiacleantool.cleantool.web.domain.users.employee;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;

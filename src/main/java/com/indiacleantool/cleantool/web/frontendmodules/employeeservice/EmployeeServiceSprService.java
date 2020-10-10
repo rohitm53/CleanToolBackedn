@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.modules.employeeservice;
+package com.indiacleantool.cleantool.web.frontendmodules.employeeservice;
 
 import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeService;
 import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeServiceRelation;
@@ -86,5 +86,9 @@ public class EmployeeServiceSprService {
             }
         }
         return listEmployeeService;
+    }
+
+    public long countByCompanyCodeNServiceCode(String companyCode,String serviceCode) {
+        return repository.countByCompanyCodeAndServiceCode(companyCode,serviceCode);
     }
 }

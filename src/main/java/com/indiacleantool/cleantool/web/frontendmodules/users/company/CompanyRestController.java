@@ -1,6 +1,6 @@
-package com.indiacleantool.cleantool.web.modules.users.company;
+package com.indiacleantool.cleantool.web.frontendmodules.users.company;
 
-import com.indiacleantool.cleantool.web.domain.users.Company;
+import com.indiacleantool.cleantool.web.domain.users.company.Company;
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

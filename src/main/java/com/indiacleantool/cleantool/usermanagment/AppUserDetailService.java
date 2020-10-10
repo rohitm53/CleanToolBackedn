@@ -1,9 +1,8 @@
 package com.indiacleantool.cleantool.usermanagment;
 
-import com.indiacleantool.cleantool.security.SecurityConstants;
-import com.indiacleantool.cleantool.web.domain.users.Role;
-import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
-import com.indiacleantool.cleantool.web.modules.users.company.CompanyService;
+import com.indiacleantool.cleantool.web.domain.users.login.Role;
+import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
+import com.indiacleantool.cleantool.web.frontendmodules.users.company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,6 +39,7 @@ public class AppUserDetailService implements UserDetailsService {
 
         }
         return new User(username,userCredentials.getPassword(),authorities);
+
     }
 
     private String getSpringConfigureRole(String role){

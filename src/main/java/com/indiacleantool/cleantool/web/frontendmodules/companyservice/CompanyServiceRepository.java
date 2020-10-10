@@ -1,11 +1,13 @@
-package com.indiacleantool.cleantool.web.modules.companyservice;
+package com.indiacleantool.cleantool.web.frontendmodules.companyservice;
 
 import com.indiacleantool.cleantool.web.domain.companyservice.CompanyService;
-import org.springframework.data.jpa.repository.Query;
+import com.indiacleantool.cleantool.web.domain.users.company.CompanyCodeView;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface CompanyServiceRepository extends CrudRepository<CompanyService,Long> {
@@ -14,4 +16,6 @@ public interface CompanyServiceRepository extends CrudRepository<CompanyService,
     void deleteCompanyServiceByCompanyCode(@Param("the_company_code") String companyCode);
 
     long countByCompanyCode(String companyCode);
+
+    List<CompanyCodeView> findByServiceCode(String serviceCode);
 }

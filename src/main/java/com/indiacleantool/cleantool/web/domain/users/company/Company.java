@@ -1,6 +1,7 @@
-package com.indiacleantool.cleantool.web.domain.users;
+package com.indiacleantool.cleantool.web.domain.users.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

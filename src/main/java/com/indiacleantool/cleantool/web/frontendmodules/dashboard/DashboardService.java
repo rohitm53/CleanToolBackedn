@@ -1,9 +1,9 @@
-package com.indiacleantool.cleantool.web.modules.dashboard;
+package com.indiacleantool.cleantool.web.frontendmodules.dashboard;
 
 import com.indiacleantool.cleantool.web.domain.companydashboard.DashboardReportResponse;
-import com.indiacleantool.cleantool.web.modules.asset.AssetService;
-import com.indiacleantool.cleantool.web.modules.companyservice.CompanyServiceSprService;
-import com.indiacleantool.cleantool.web.modules.employees.EmployeeService;
+import com.indiacleantool.cleantool.web.frontendmodules.asset.AssetService;
+import com.indiacleantool.cleantool.web.frontendmodules.companyservice.CompanyServiceSprService;
+import com.indiacleantool.cleantool.web.frontendmodules.employees.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

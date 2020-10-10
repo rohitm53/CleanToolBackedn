@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.modules.asset;
+package com.indiacleantool.cleantool.web.frontendmodules.asset;
 
 import com.indiacleantool.cleantool.web.domain.assets.Asset;
 import org.springframework.data.repository.CrudRepository;

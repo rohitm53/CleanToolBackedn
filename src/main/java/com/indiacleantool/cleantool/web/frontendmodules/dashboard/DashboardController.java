@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.modules.dashboard;
+package com.indiacleantool.cleantool.web.frontendmodules.dashboard;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

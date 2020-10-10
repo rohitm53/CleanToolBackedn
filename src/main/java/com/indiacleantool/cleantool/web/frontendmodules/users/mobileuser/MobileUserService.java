@@ -1,11 +1,11 @@
-package com.indiacleantool.cleantool.web.modules.users.mobileuser;
+package com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser;
 
 import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.security.SecurityConstants;
 import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
-import com.indiacleantool.cleantool.web.domain.users.MobileUser;
-import com.indiacleantool.cleantool.web.domain.users.Role;
-import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
+import com.indiacleantool.cleantool.web.domain.users.mobileuser.MobileUser;
+import com.indiacleantool.cleantool.web.domain.users.login.Role;
+import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -1,16 +1,15 @@
-package com.indiacleantool.cleantool.web.modules.users.company;
+package com.indiacleantool.cleantool.web.frontendmodules.users.company;
 
 import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.security.SecurityConstants;
 import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
-import com.indiacleantool.cleantool.web.domain.users.Company;
-import com.indiacleantool.cleantool.web.domain.users.Role;
-import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
+import com.indiacleantool.cleantool.web.domain.users.company.Company;
+import com.indiacleantool.cleantool.web.domain.users.login.Role;
+import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
 import com.indiacleantool.cleantool.web.exceptions.userexception.company.CompanyCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +48,10 @@ public class CompanyService {
         }catch (Exception e){
             throw new CompanyCodeException("Company code '"+company.getCompanyCode()+"' already existed ");
         }
+    }
+
+    public Company findByCompanyCode(String company_code){
+        return companyRepository.findByCompanyCode(company_code);
     }
 
 }

@@ -1,2 +1,5 @@
-package com.indiacleantool.cleantool.web.domain.users.company;public class CompanyCodeView {
+package com.indiacleantool.cleantool.web.domain.users.company;
+
+public interface CompanyCodeView {
+    public String getCompanyCode();
 }

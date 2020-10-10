@@ -1,9 +1,10 @@
-package com.indiacleantool.cleantool.web.modules.companyservice;
+package com.indiacleantool.cleantool.web.frontendmodules.companyservice;
 
 import com.indiacleantool.cleantool.web.domain.staticservice.Services;
 import com.indiacleantool.cleantool.web.domain.companyservice.CompanyService;
+import com.indiacleantool.cleantool.web.domain.users.company.CompanyCodeView;
 import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
-import com.indiacleantool.cleantool.web.modules.staticservices.StaticServiceRepository;
+import com.indiacleantool.cleantool.web.frontendmodules.staticservices.StaticServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,9 @@ public class CompanyServiceSprService {
 
     public Long getCountByCompanyCode(String companyCode){
         return repository.countByCompanyCode(companyCode);
+    }
+
+    public List<CompanyCodeView> getCompanyCodeByServiceCode(String serviceCode){
+        return repository.findByServiceCode(serviceCode);
     }
 }

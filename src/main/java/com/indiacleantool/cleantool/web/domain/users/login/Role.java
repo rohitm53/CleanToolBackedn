@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.domain.users;
+package com.indiacleantool.cleantool.web.domain.users.login;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

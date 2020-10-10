@@ -1,12 +1,20 @@
-1. generateEmployeeCode
+------------------------------------------------------------------------------------------------------------------------
 
-	DELIMITER $$
-	CREATE PROCEDURE `generateEmployeeCode`(in empId int , out empCode varchar(20))
-	begin
-	update employee set employee_code=concat(lower(first_name),'0',cast(id as char)) where id=empId;
-	select employee_code into empCode  from employee where id=empId;
-	end$$
-	DELIMITER ;
+1. SP for generating Employee code
+
+    DELIMITER $$
+        drop procedure if exists sp_generateEmployeeCode;
+    CREATE PROCEDURE `sp_generateEmployeeCode`(in empId int , out empCode varchar(20))
+    begin
+        update employee set employee_code=concat("e",lower(first_name),'0',cast(id as char)) where id=empId;
+        select employee_code into empCode  from employee where id=empId;
+        end$$
+    DELIMITER ;
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 2. SP for Deleting employee by employeecode
 
@@ -39,6 +47,10 @@
         commit;
     end$$
     DELIMITER ;
+
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 3. SP to delete company service by companycode
 
@@ -89,6 +101,10 @@
     end$$
     DELIMITER ;
 
+
+------------------------------------------------------------------------------------------------------------------------
+
+
 4. SP to delete employee service by companycode.
     DELIMITER //
     drop procedure if exists sp_deleteEmployeeServiceByCompanyCode;
@@ -134,16 +150,52 @@
     drop procedure sp_deleteEmployeeServiceByCompanyCode;
     call sp_deleteEmployeeServiceByCompanyCode("WINIT");
 
+
+------------------------------------------------------------------------------------------------------------------------
+
+
 5. SP to create Mobile user code generateMobileUserCode
-DELIMITER $$
 
-    create procedure generateMobileUserCode (in mobile_user_id int , out out_mobile_user_code varchar(50))
-    begin
-		update mobile_user set mobile_user_code=concat(lower(first_name),'0',cast(id as char)) where id=mobile_user_id;
-		select mobile_user_code into out_mobile_user_code from mobile_user where id=mobile_user_id;
-    end $$
+    DELIMITER $$
+        drop procedure if exists sp_generateMobileUserCode;
+        CREATE PROCEDURE `sp_generateMobileUserCode`(in mobile_user_id int , out out_mobile_user_code varchar(50))
+        begin
+                update mobile_user set mobile_user_code=concat("m",lower(first_name),'0',cast(id as char)) where id=mobile_user_id;
+                select mobile_user_code into out_mobile_user_code from mobile_user where id=mobile_user_id;
+        end$$
+    DELIMITER ;
 
-DELIMITER ;
 
 set @out_mobile_user_code:=""
-call generateMobileUserCode(1,@out_mobile_user_code);
+call sp_generateMobileUserCode(1,@out_mobile_user_code);
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+6. SP to insert service master data
+
+    DELIMITER $$
+    	drop procedure if exists sp_Intialise_Service_Master;
+    	create procedure sp_Intialise_Service_Master()
+    		begin
+    			TRUNCATE TABLE services;
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('UT','Utensils',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('MPB','Mopping/Brooming',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('BTH','Bathroom',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('TLT','Toilet',1,now());
+
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('KT','Kitchen',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('OFC','Office',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('WRH','Warehouse',1,now());
+
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('CLTH','Clothes',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('DRCLNG','Dry Cleaning',1,now());
+    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('IRNG','Ironing',1,now());
+
+    			commit;
+    		end $$
+    DELIMITER ;
+
+    call sp_Intialise_Service_Master()
+
+------------------------------------------------------------------------------------------------------------------------

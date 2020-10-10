@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.modules.employeeservice;
+package com.indiacleantool.cleantool.web.frontendmodules.employeeservice;
 
 import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeService;
 import org.springframework.data.jpa.repository.query.Procedure;
@@ -11,4 +11,6 @@ public interface EmployeeServiceRepository extends CrudRepository<EmployeeServic
 
     @Procedure(name = "sp_deleteEmployeeServiceByCompanyCode")
     void deleteEmployeeServicebyCompanyCode(@Param("the_companyCode") String companyCode);
+
+    long countByCompanyCodeAndServiceCode(String companyCode,String serviceCode);
 }

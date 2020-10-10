@@ -15,7 +15,7 @@ public class Services {
     private Long id;
 
     @NotBlank(message = "Service code cannot be blank")
-    @Size(min = 2 , max = 4 , message = "Please use 2 to 4 charaters for service code")
+    @Size(min = 2 , max = 10 , message = "Please use 2 to 10 charaters for service code")
     @Column(updatable = false,unique = true)
     private String serviceCode;
 

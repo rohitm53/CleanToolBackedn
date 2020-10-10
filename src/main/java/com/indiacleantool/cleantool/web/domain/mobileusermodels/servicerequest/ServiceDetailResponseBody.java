@@ -1,49 +1,21 @@
 package com.indiacleantool.cleantool.web.domain.mobileusermodels.servicerequest;
 
-import com.indiacleantool.cleantool.web.domain.users.company.Company;
+import java.util.List;
 
-public class ServiceDetailResponse {
+public class ServiceDetailResponseBody {
 
-    private Company company;
-    private Long availableEmployeeCount;
-    private Error error;
+    private List<ServiceDetail> listServiceDetails;
 
-    public ServiceDetailResponse(Company company, Long availableEmployeeCount,Error error) {
-        this.company = company;
-        this.availableEmployeeCount = availableEmployeeCount;
-        this.error=error;
+
+    public ServiceDetailResponseBody(List<ServiceDetail> listServiceDetails) {
+        this.listServiceDetails = listServiceDetails;
     }
 
-    public Company getCompany() {
-        return company;
+    public List<ServiceDetail> getServiceDetails() {
+        return listServiceDetails;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setServiceDetails(List<ServiceDetail> listServiceDetails) {
+        this.listServiceDetails = listServiceDetails;
     }
-
-    public Long getAvailableEmployeeCount() {
-        return availableEmployeeCount;
-    }
-
-    public void setAvailableEmployeeCount(Long availableEmployeeCount) {
-        this.availableEmployeeCount = availableEmployeeCount;
-    }
-
-    class Error {
-        private String error;
-
-        public Error(String error) {
-            this.error = error;
-        }
-
-        public String getError() {
-            return error;
-        }
-
-        public void setError(String error) {
-            this.error = error;
-        }
-    }
-
 }

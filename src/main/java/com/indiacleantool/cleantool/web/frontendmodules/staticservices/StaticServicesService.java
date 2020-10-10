@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.modules.staticservices;
+package com.indiacleantool.cleantool.web.frontendmodules.staticservices;
 
 import com.indiacleantool.cleantool.web.domain.staticservice.Services;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
