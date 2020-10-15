@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.usermanagment;
 
-import com.indiacleantool.cleantool.web.domain.users.login.UserCredentials;
+import com.indiacleantool.cleantool.web.models.users.login.UserCredentials;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

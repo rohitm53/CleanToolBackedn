@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.frontendmodules.dashboard;
 
-import com.indiacleantool.cleantool.web.domain.companydashboard.DashboardReportResponse;
+import com.indiacleantool.cleantool.web.models.frontendmodals.companydashboard.DashboardReportResponse;
 import com.indiacleantool.cleantool.web.frontendmodules.asset.AssetService;
 import com.indiacleantool.cleantool.web.frontendmodules.companyservice.CompanyServiceSprService;
 import com.indiacleantool.cleantool.web.frontendmodules.employees.EmployeeService;

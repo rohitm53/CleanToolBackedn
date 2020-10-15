@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser;
 
-import com.indiacleantool.cleantool.web.domain.users.mobileuser.MobileUser;
+import com.indiacleantool.cleantool.web.models.users.mobileuser.MobileUser;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

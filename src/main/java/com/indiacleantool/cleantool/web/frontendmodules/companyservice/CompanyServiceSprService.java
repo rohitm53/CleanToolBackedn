@@ -1,8 +1,8 @@
 package com.indiacleantool.cleantool.web.frontendmodules.companyservice;
 
-import com.indiacleantool.cleantool.web.domain.staticservice.Services;
-import com.indiacleantool.cleantool.web.domain.companyservice.CompanyService;
-import com.indiacleantool.cleantool.web.domain.users.company.CompanyCodeView;
+import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
+import com.indiacleantool.cleantool.web.models.frontendmodals.companyservice.CompanyService;
+import com.indiacleantool.cleantool.web.models.users.company.CompanyCodeView;
 import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
 import com.indiacleantool.cleantool.web.frontendmodules.staticservices.StaticServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;

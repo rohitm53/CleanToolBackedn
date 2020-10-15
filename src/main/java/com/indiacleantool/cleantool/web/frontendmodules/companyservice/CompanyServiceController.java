@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.frontendmodules.companyservice;
 
-import com.indiacleantool.cleantool.web.domain.companyservice.CompanyServiceRequest;
+import com.indiacleantool.cleantool.web.models.frontendmodals.companyservice.CompanyServiceRequest;
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,9 +1,9 @@
 package com.indiacleantool.cleantool.web.frontendmodules.employeeservice;
 
-import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeService;
-import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeServiceRelation;
-import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeServiceRequest;
-import com.indiacleantool.cleantool.web.domain.employeeservice.EmployeeServiceRequestBody;
+import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeService;
+import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeServiceRelation;
+import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeServiceRequest;
+import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeServiceRequestBody;
 import com.indiacleantool.cleantool.web.exceptions.employeeservice.EmployeeServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.frontendmodules.asset;
 
-import com.indiacleantool.cleantool.web.domain.assets.Asset;
+import com.indiacleantool.cleantool.web.models.frontendmodals.assets.Asset;
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
