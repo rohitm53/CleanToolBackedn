@@ -199,3 +199,46 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
     call sp_Intialise_Service_Master()
 
 ------------------------------------------------------------------------------------------------------------------------
+
+7. SP to insert time slots master data
+
+    DELIMITER $$
+    drop procedure if exists sp_TimeSlot_Master;
+    CREATE  PROCEDURE `sp_TimeSlot_Master`()
+    begin
+                    TRUNCATE TABLE time_slots;
+                    insert into time_slots(slot_code,time) values('T1',(NOW() + interval 1 hour));
+                    insert into time_slots(slot_code,time) values('T2',(NOW() + interval 2 hour));
+                    insert into time_slots(slot_code,time) values('T3',(NOW() + interval 3 hour));
+                    insert into time_slots(slot_code,time) values('T4',(NOW() + interval 4 hour));
+                    insert into time_slots(slot_code,time) values('T5',(NOW() + interval 5 hour));
+                    insert into time_slots(slot_code,time) values('T6',(NOW() + interval 6 hour));
+                    insert into time_slots(slot_code,time) values('T7',(NOW() + interval 7 hour));
+                    insert into time_slots(slot_code,time) values('T8',(NOW() + interval 8 hour));
+
+                    commit;
+                end$$
+    DELIMITER ;
+
+------------------------------------------------------------------------------------------------------------------------
+
+8. SP to generate Service Requeste Code
+
+    DELIMITER $$
+    drop procedure if exists sp_Genarate_Service_RequestCode;
+    CREATE PROCEDURE sp_Genarate_Service_RequestCode (in service_req_id int, out service_req_code varchar(50))
+    begin
+    			select concat(upper(company_code) , upper(mobile_user_code) , upper(service_code),floor(RAND()*10000))
+    						into service_req_code  from service_request where id=service_req_id;
+
+                update service_request set service_req_code=service_req_code where id=service_req_id;
+            end$$
+    DELIMITER ;
+
+
+    set @service_req_code:='';
+    call sp_Genarate_Service_RequestCode(1,@service_req_code);
+
+    select @service_req_code;
+
+

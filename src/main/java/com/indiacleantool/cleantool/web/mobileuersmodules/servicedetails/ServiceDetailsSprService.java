@@ -1,5 +1,6 @@
 package com.indiacleantool.cleantool.web.mobileuersmodules.servicedetails;
 
+import com.indiacleantool.cleantool.web.common.timeslots.TimeSlotsService;
 import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.serviceprovidercompany.ServiceProviderCompanyDetails;
@@ -12,6 +13,7 @@ import com.indiacleantool.cleantool.web.frontendmodules.users.company.CompanySer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,10 +32,15 @@ public class ServiceDetailsSprService {
     private EmployeeServiceSprService employeeServiceSprService;
 
 
+    @Autowired
+    private TimeSlotsService timeSlotsService;
+
 
     public ServiceProviderDetailResponse getServiceDetailsByServiceCode(String service_code){
 
         ServiceProviderDetailResponse response =null;
+
+        List<TimeSlots> timeSlotsList = timeSlotsService.findAll();
 
         ///Step 1 , Get all company codes who provide service with provided service_code
         List<CompanyCodeView> companyCodeViewList = companyServiceSprService.getCompanyCodeByServiceCode(service_code);
@@ -53,7 +60,7 @@ public class ServiceDetailsSprService {
 
                 long count = employeeServiceSprService.countByCompanyCodeNServiceCode(companyCode,service_code);
                 if(count>0){
-                    lisServiceProviderCompanyDetails.add(new ServiceProviderCompanyDetails(company,count,getTimeSlots()));
+                    lisServiceProviderCompanyDetails.add(new ServiceProviderCompanyDetails(company,count,timeSlotsList));
                 }
             }
 
@@ -69,29 +76,29 @@ public class ServiceDetailsSprService {
         return response;
     }
 
-    private List<TimeSlots> getTimeSlots(){
-
-        int startTimeHour = 8;
-        List<TimeSlots> listTimeSlots = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MONTH,1);
-        calendar.set(Calendar.DAY_OF_MONTH,1);
-        calendar.set(Calendar.YEAR,1990);
-
-        calendar.set(Calendar.HOUR_OF_DAY,startTimeHour);
-        calendar.set(Calendar.MINUTE,0);
-        calendar.set(Calendar.SECOND,0);
-
-
-        for(int i=1;i<=8;i++){
-            String code = "T"+i;
-            Date date = calendar.getTime();
-            listTimeSlots.add(new TimeSlots((long) i,code,date));
-            startTimeHour++;
-            calendar.set(Calendar.HOUR_OF_DAY,startTimeHour);
-        }
-
-        return listTimeSlots;
-    }
+//    private List<TimeSlots> getTimeSlots(){
+//
+//        int startTimeHour = 8;
+//        List<TimeSlots> listTimeSlots = new ArrayList<>();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.MONTH,1);
+//        calendar.set(Calendar.DAY_OF_MONTH,1);
+//        calendar.set(Calendar.YEAR,1990);
+//
+//        calendar.set(Calendar.HOUR_OF_DAY,startTimeHour);
+//        calendar.set(Calendar.MINUTE,0);
+//        calendar.set(Calendar.SECOND,0);
+//
+//
+//        for(int i=1;i<=8;i++){
+//            String code = "T"+i;
+//            Date date = calendar.getTime();
+//            listTimeSlots.add(new TimeSlots((long) i,code,date));
+//            startTimeHour++;
+//            calendar.set(Calendar.HOUR_OF_DAY,startTimeHour);
+//        }
+//
+//        return listTimeSlots;
+//    }
 
 }

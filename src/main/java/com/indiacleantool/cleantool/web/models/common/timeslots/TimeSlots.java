@@ -20,6 +20,9 @@ public class TimeSlots {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private Date time;
 
+    public TimeSlots() {
+    }
+
     public TimeSlots(Long id, String slotCode, Date time) {
         this.id = id;
         this.slotCode = slotCode;

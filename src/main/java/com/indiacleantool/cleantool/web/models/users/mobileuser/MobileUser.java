@@ -45,7 +45,7 @@ public class MobileUser {
     @NotBlank(message = "Adress cannot be blank")
     private String address;
 
-    private String mobile_user_code;
+    private String mobileUserCode;
 
 
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -111,12 +111,12 @@ public class MobileUser {
         this.address = address;
     }
 
-    public String getMobile_user_code() {
-        return mobile_user_code;
+    public String getMobileUserCode() {
+        return mobileUserCode;
     }
 
-    public void setMobile_user_code(String mobile_user_code) {
-        this.mobile_user_code = mobile_user_code;
+    public void setMobileUserCode(String mobileUserCode) {
+        this.mobileUserCode = mobileUserCode;
     }
 
     public Date getCreated_at() {

@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.web.exceptions.employees;
+package com.indiacleantool.cleantool.web.exceptions.userexception.employees;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

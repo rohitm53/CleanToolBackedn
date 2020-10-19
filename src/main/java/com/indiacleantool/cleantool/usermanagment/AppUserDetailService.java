@@ -28,7 +28,7 @@ public class AppUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        UserCredentials userCredentials = userCredentialsRepository.findByusername(username);
+        UserCredentials userCredentials = userCredentialsRepository.findByusernameIgnoreCase(username);
 
         if(userCredentials.getRoles()!=null && userCredentials.getRoles().size()>0){
             for(Role role : userCredentials.getRoles()){

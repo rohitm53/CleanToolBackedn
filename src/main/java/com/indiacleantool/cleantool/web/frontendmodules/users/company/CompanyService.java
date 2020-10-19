@@ -51,7 +51,14 @@ public class CompanyService {
     }
 
     public Company findByCompanyCode(String company_code){
-        return companyRepository.findByCompanyCode(company_code);
+
+        Company company = companyRepository.findByCompanyCode(company_code);
+
+        if(company==null){
+            throw new CompanyCodeException("No company available with code : "+company_code);
+        }
+
+        return company;
     }
 
 }

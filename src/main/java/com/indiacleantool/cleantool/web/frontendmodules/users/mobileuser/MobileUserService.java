@@ -3,6 +3,7 @@ package com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser;
 import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.security.SecurityConstants;
 import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
+import com.indiacleantool.cleantool.web.exceptions.userexception.mobile.MobileUserCodeException;
 import com.indiacleantool.cleantool.web.models.users.mobileuser.MobileUser;
 import com.indiacleantool.cleantool.web.models.users.login.Role;
 import com.indiacleantool.cleantool.web.models.users.login.UserCredentials;
@@ -34,7 +35,7 @@ public class MobileUserService {
         if(id==null){
 
             String mobileUserCode = mobileUserRepository.generateMobileUserCode(saveMobileUser.getId());
-            saveMobileUser.setMobile_user_code(mobileUserCode);
+            saveMobileUser.setMobileUserCode(mobileUserCode);
 
             UserCredentials userCredentials = new UserCredentials(mobileUserCode, Constants.InitialPassword);
             userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));
@@ -48,4 +49,15 @@ public class MobileUserService {
         }
         return saveMobileUser;
     }
+
+
+    public MobileUser findMobileUserByCode(String mobile_user_code){
+
+        MobileUser mobileUser = mobileUserRepository.findByMobileUserCode(mobile_user_code);
+        if(mobileUser==null){
+            throw new MobileUserCodeException("No mobile user available with code : "+mobile_user_code);
+        }
+        return mobileUser;
+    }
+
 }

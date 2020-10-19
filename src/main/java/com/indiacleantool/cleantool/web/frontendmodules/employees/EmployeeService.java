@@ -6,7 +6,7 @@ import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
 import com.indiacleantool.cleantool.web.models.users.employee.Employee;
 import com.indiacleantool.cleantool.web.models.users.login.Role;
 import com.indiacleantool.cleantool.web.models.users.login.UserCredentials;
-import com.indiacleantool.cleantool.web.exceptions.employees.EmployeeCodeException;
+import com.indiacleantool.cleantool.web.exceptions.userexception.employees.EmployeeCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -60,6 +60,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                         ).permitAll()
                        .antMatchers(SecurityConstants.ACTUATOR_ENDPOINT).permitAll()
                        .antMatchers(SecurityConstants.COMMON_USER_ENDPOINT,SecurityConstants.STATIC_SERVICE_ENDPOINT).permitAll()
+
+                       .antMatchers(SecurityConstants.SERVICE_REQUEST_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY,
+                                            SecurityConstants.ROLE_MOBILE_USER,SecurityConstants.ROLE_EMPLOYEE)
+
                        .antMatchers(SecurityConstants.COMPANY_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY)
                        .antMatchers(SecurityConstants.MOBILE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_MOBILE_USER)
                        .antMatchers(SecurityConstants.EMPLOYEE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_EMPLOYEE)

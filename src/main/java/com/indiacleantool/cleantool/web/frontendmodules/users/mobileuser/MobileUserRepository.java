@@ -12,4 +12,7 @@ public interface MobileUserRepository extends CrudRepository<MobileUser,Long> {
     @Procedure(name = "sp_generateMobileUserCode")
     String generateMobileUserCode(@Param("mobile_user_id") Long mobileUserId);
 
+
+    MobileUser findByMobileUserCode(String mobile_user_code);
+
 }
