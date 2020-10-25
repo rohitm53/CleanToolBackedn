@@ -65,9 +65,9 @@ public class ServiceRequest {
     private Services services;
 
     @OneToOne
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "assigned_employee_id")
     @JsonIgnore
-    private Employee employee;
+    private Employee assignedEmployee;
 
     private String assignedEmployeeCode;
 
@@ -80,6 +80,26 @@ public class ServiceRequest {
     private Double reqLatitude;
 
     private Double reqLongitude;
+
+
+    ////Only for Frontend and Mobile user response
+    @Transient
+    private String companyName;
+
+    @Transient
+    private String mobileUserName;
+
+    @Transient
+    private String assignedEmployeeName;
+
+    @Transient
+    private String assignedEmployeeMobile;
+
+    @Transient
+    private String serviceName;
+
+    @Transient
+    private String time;
 
 
     public String getAssignedEmployeeCode() {
@@ -177,12 +197,12 @@ public class ServiceRequest {
         this.services = services;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Employee getAssignedEmployee() {
+        return assignedEmployee;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setAssignedEmployee(Employee assignedEmployee) {
+        this.assignedEmployee = assignedEmployee;
     }
 
     public int getStatusCode() {
@@ -239,6 +259,56 @@ public class ServiceRequest {
 
     public void setUpdated_at(Date updated_at) {
         this.updated_at = updated_at;
+    }
+
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getAssignedEmployeeName() {
+        return assignedEmployeeName;
+    }
+
+    public void setAssignedEmployeeName(String assignedEmployeeName) {
+        this.assignedEmployeeName = assignedEmployeeName;
+    }
+
+    public String getAssignedEmployeeMobile() {
+        return assignedEmployeeMobile;
+    }
+
+    public void setAssignedEmployeeMobile(String assignedEmployeeMobile) {
+        this.assignedEmployeeMobile = assignedEmployeeMobile;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+
+    public String getMobileUserName() {
+        return mobileUserName;
+    }
+
+    public void setMobileUserName(String mobileUserName) {
+        this.mobileUserName = mobileUserName;
     }
 
     @PrePersist

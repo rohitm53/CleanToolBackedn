@@ -12,6 +12,7 @@ import com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser.MobileU
 import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
 import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
+import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.PendingServiceRequestResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceReqResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceRequest;
 import com.indiacleantool.cleantool.web.models.users.company.Company;
@@ -19,8 +20,7 @@ import com.indiacleantool.cleantool.web.models.users.mobileuser.MobileUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.concurrent.TimeoutException;
+import java.util.List;
 
 @Service
 public class BookServiceSprService {
@@ -89,6 +89,78 @@ public class BookServiceSprService {
         }
 
         return reqResponse;
+    }
+
+
+    public PendingServiceRequestResponse getAllMobileServiceRequest(String mobileUserCode){
+
+        PendingServiceRequestResponse response = null;
+
+        try {
+            List<ServiceRequest> requestList = repository.findByMobileUserCodeIgnoreCase(mobileUserCode);
+
+            if(requestList == null || requestList.size() == 0){
+                throw new Exception("No Pending service");
+            }
+
+            requestList.forEach((serviceRequest -> {
+                serviceRequest.setCompanyName(serviceRequest.getCompany().getCompanyName());
+
+                serviceRequest.setAssignedEmployeeName(
+                        serviceRequest.getAssignedEmployee() != null ? serviceRequest.getAssignedEmployee().getFirstName()
+                                + " " + serviceRequest.getAssignedEmployee().getLastName() : null);
+
+
+                serviceRequest.setServiceName(serviceRequest.getServices().getServiceName());
+                serviceRequest.setTime(serviceRequest.getTimeSlots().getTime().toString());
+            }));
+
+            response = new PendingServiceRequestResponse(requestList);
+
+        }catch (Exception e){
+            response = new PendingServiceRequestResponse(new Error("No pending service available"));
+        }
+
+        return response;
+    }
+
+
+    public PendingServiceRequestResponse getAllCompanyServiceRequest(String companyCode){
+
+        PendingServiceRequestResponse response = null;
+
+        try{
+
+            List<ServiceRequest> requestList = repository.findByCompanyCodeIgnoreCase(companyCode);
+
+            if(requestList == null || requestList.size() == 0){
+                throw new Exception("No Pending service");
+            }
+
+            requestList.forEach((serviceRequest -> {
+                serviceRequest.setCompanyName(serviceRequest.getCompany().getCompanyName());
+
+                serviceRequest.setMobileUserName(serviceRequest.getMobileUser().getFirstName() + " " +
+                                        serviceRequest.getMobileUser().getLastName());
+
+                serviceRequest.setAssignedEmployeeName(
+                        serviceRequest.getAssignedEmployee()!=null ? serviceRequest.getAssignedEmployee().getFirstName()
+                                + " "+serviceRequest.getAssignedEmployee().getLastName(): null);
+
+
+                serviceRequest.setServiceName(serviceRequest.getServices().getServiceName());
+                serviceRequest.setTime(serviceRequest.getTimeSlots().getTime().toString());
+            }));
+
+            response = new PendingServiceRequestResponse(requestList);
+
+        }catch (Exception e){
+            response = new PendingServiceRequestResponse(new Error("No pending service available"));
+        }
+
+
+
+        return response;
     }
 
 }

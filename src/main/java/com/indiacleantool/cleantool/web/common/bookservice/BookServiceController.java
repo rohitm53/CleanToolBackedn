@@ -3,15 +3,14 @@ package com.indiacleantool.cleantool.web.common.bookservice;
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/servicerequest")
@@ -34,5 +33,15 @@ public class BookServiceController {
 
     }
 
+    @GetMapping("/mobile")
+    public ResponseEntity<?> getAllMobileUserRequest(Principal principal){
+        return new ResponseEntity<>(service.getAllMobileServiceRequest(principal.getName()), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/company")
+    public ResponseEntity<?> getAllCompanyServiceRequest(Principal principal){
+        return new ResponseEntity<>(service.getAllCompanyServiceRequest(principal.getName()), HttpStatus.OK);
+    }
 
 }
