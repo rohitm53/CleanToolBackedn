@@ -75,4 +75,10 @@ public class EmployeeService {
     public Long getCountByCompanyCode(String companyCode){
         return repository.countByCompanyCode(companyCode);
     }
+
+    public Employee findEmployeeById(Long id){
+        return repository.findById(id).orElseThrow(()-> {
+            throw new EmployeeCodeException("No employee available with Id : "+id+".");
+        });
+    }
 }
