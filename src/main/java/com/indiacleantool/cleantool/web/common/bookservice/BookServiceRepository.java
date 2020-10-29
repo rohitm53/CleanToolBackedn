@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public interface BookServiceRepository extends CrudRepository<ServiceRequest,Long> {
@@ -18,5 +19,7 @@ public interface BookServiceRepository extends CrudRepository<ServiceRequest,Lon
     List<ServiceRequest> findByMobileUserCodeIgnoreCase(String mobileUserCode);
 
     List<ServiceRequest> findByCompanyCodeIgnoreCase(String companyCode);
+
+    Optional<ServiceRequest> findByServiceReqCode(String serviceReqCode);
 
 }

@@ -91,4 +91,23 @@ public class EmployeeServiceSprService {
     public long countByCompanyCodeNServiceCode(String companyCode,String serviceCode) {
         return repository.countByCompanyCodeAndServiceCode(companyCode,serviceCode);
     }
+
+
+
+
+    public EmployeeService findByCompanyCodeAndServiceCodeAndEmployeeCode(
+            String companyCode,
+            String serviceCode,
+            String employeeCode
+    ){
+        return repository.findByCompanyCodeAndServiceCodeAndEmployeeCode(
+                companyCode,
+                serviceCode,
+                employeeCode
+        );
+    }
+
+
+
+
 }

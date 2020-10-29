@@ -1,31 +1,24 @@
-package com.indiacleantool.cleantool.web.frontendmodules.assignemployee;
+package com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee;
 
-public class AssignEmployee {
+import javax.validation.constraints.NotBlank;
 
-    private Long serviceRequestId;
+public class AssignEmployeeRequest {
 
+
+    @NotBlank(message = "Service request code cannot be blank")
     private String serviceReqCode;
 
-    private Long assignenEmployeeId;
 
+    @NotBlank(message = "Employee code cannot be blank")
     private String assignedEmployeeCode;
 
-    public AssignEmployee() {
+    public AssignEmployeeRequest() {
     }
 
-    public AssignEmployee(Long serviceRequestId, String serviceReqCode, Long assignenEmployeeId, String assignedEmployeeCode) {
-        this.serviceRequestId = serviceRequestId;
+    public AssignEmployeeRequest(@NotBlank(message = "Service request code cannot be blank") String serviceReqCode,
+                                 @NotBlank(message = "Employee code cannot be blank") String assignedEmployeeCode) {
         this.serviceReqCode = serviceReqCode;
-        this.assignenEmployeeId = assignenEmployeeId;
         this.assignedEmployeeCode = assignedEmployeeCode;
-    }
-
-    public Long getServiceRequestId() {
-        return serviceRequestId;
-    }
-
-    public void setServiceRequestId(Long serviceRequestId) {
-        this.serviceRequestId = serviceRequestId;
     }
 
     public String getServiceReqCode() {
@@ -34,14 +27,6 @@ public class AssignEmployee {
 
     public void setServiceReqCode(String serviceReqCode) {
         this.serviceReqCode = serviceReqCode;
-    }
-
-    public Long getAssignenEmployeeId() {
-        return assignenEmployeeId;
-    }
-
-    public void setAssignenEmployeeId(Long assignenEmployeeId) {
-        this.assignenEmployeeId = assignenEmployeeId;
     }
 
     public String getAssignedEmployeeCode() {

@@ -15,7 +15,7 @@ import javax.validation.Valid;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService service;
+    private EmployeeSprService service;
 
     @Autowired
     private MapValidationExceptionService mapValidationExceptionService;

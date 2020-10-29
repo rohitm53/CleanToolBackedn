@@ -1,25 +1,34 @@
 package com.indiacleantool.cleantool.web.common.bookservice;
 
 import com.indiacleantool.cleantool.web.common.timeslots.TimeSlotsService;
+import com.indiacleantool.cleantool.web.exceptions.employeeservice.EmployeeServiceException;
 import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
+import com.indiacleantool.cleantool.web.exceptions.servicerequest.ServiceRequestException;
 import com.indiacleantool.cleantool.web.exceptions.timeslots.TimeSlotCodeException;
 import com.indiacleantool.cleantool.web.exceptions.userexception.company.CompanyCodeException;
+import com.indiacleantool.cleantool.web.exceptions.userexception.employees.EmployeeCodeException;
 import com.indiacleantool.cleantool.web.exceptions.userexception.mobile.MobileUserCodeException;
-import com.indiacleantool.cleantool.web.frontendmodules.employees.EmployeeService;
+import com.indiacleantool.cleantool.web.frontendmodules.employees.EmployeeSprService;
+import com.indiacleantool.cleantool.web.frontendmodules.employeeservice.EmployeeServiceSprService;
 import com.indiacleantool.cleantool.web.frontendmodules.staticservices.StaticServicesService;
 import com.indiacleantool.cleantool.web.frontendmodules.users.company.CompanyService;
 import com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser.MobileUserService;
 import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee.AssignEmployeeResponse;
+import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeService;
 import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.PendingServiceRequestResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceReqResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceRequest;
 import com.indiacleantool.cleantool.web.models.users.company.Company;
+import com.indiacleantool.cleantool.web.models.users.employee.Employee;
 import com.indiacleantool.cleantool.web.models.users.mobileuser.MobileUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -35,13 +44,16 @@ public class BookServiceSprService {
     private MobileUserService mobileUserService;
 
     @Autowired
-    private EmployeeService employeeService;
+    private EmployeeSprService employeeSprService;
 
     @Autowired
     private StaticServicesService servicesService;
 
     @Autowired
     private TimeSlotsService timeSlotsService;
+
+    @Autowired
+    private EmployeeServiceSprService employeeServiceSprService;
 
     public ServiceReqResponse saveServiceRequest(ServiceRequest request){
 
@@ -157,10 +169,61 @@ public class BookServiceSprService {
         }catch (Exception e){
             response = new PendingServiceRequestResponse(new Error("No pending service available"));
         }
-
-
-
         return response;
+    }
+
+
+    @Transactional
+    public AssignEmployeeResponse performAssignEmployeeToServiceReq(AssignEmployeeRequest request,String companyCode){
+        AssignEmployeeResponse response = null;
+
+        try{
+            ServiceRequest serviceRequest = findByServiceReqCode(request.getServiceReqCode());
+            Employee employee = this.employeeSprService.findByEmployeeCode(request.getAssignedEmployeeCode());
+
+            ///checking if employee has required service code assigned
+
+            EmployeeService employeeService = employeeServiceSprService.findByCompanyCodeAndServiceCodeAndEmployeeCode(
+                    companyCode,
+                    serviceRequest.getServiceCode(),
+                    employee.getEmployeeCode()
+            );
+
+            if(employeeService==null){
+                throw new EmployeeServiceException("Employee not available to assigne service");
+            }
+
+            serviceRequest.setAssignedEmployee(employee);
+            serviceRequest.setAssignedEmployeeCode(employee.getEmployeeCode());
+
+            serviceRequest.setStatusCode(ServiceRequest.ServiceRequestStatus.ASSIGNED.getStatusCode());
+            serviceRequest.setStatusName(ServiceRequest.ServiceRequestStatus.ASSIGNED.getStatusName());
+
+            response = new AssignEmployeeResponse(
+                    serviceRequest.getServiceReqCode(),
+                    serviceRequest.getAssignedEmployeeCode(),
+                    serviceRequest.getStatusCode(),
+                    serviceRequest.getStatusName()
+            );
+
+
+        }
+        catch (ServiceRequestException |
+                EmployeeServiceException |
+                EmployeeCodeException e){
+            response = new AssignEmployeeResponse(new Error(e.getMessage()));
+        }
+        catch (Exception e){
+            response = new AssignEmployeeResponse(new Error("Error while saving at backend"));
+        }
+        return response;
+    }
+
+
+    public ServiceRequest findByServiceReqCode(String serviceReqCode){
+        return repository.findByServiceReqCode(serviceReqCode).orElseThrow(()->{
+            throw  new ServiceRequestException("No Service available with serviceReqCode : "+serviceReqCode);
+        });
     }
 
 }

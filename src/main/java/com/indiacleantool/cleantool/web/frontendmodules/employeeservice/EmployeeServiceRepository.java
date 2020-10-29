@@ -13,4 +13,12 @@ public interface EmployeeServiceRepository extends CrudRepository<EmployeeServic
     void deleteEmployeeServicebyCompanyCode(@Param("the_companyCode") String companyCode);
 
     long countByCompanyCodeAndServiceCode(String companyCode,String serviceCode);
+
+
+    EmployeeService findByCompanyCodeAndServiceCodeAndEmployeeCode(
+            String companyCode,
+            String serviceCode,
+            String employeeCode
+    );
+
 }
