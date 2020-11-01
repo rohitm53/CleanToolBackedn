@@ -2,6 +2,7 @@ package com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicer
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
 
 import java.util.Date;
@@ -13,16 +14,16 @@ public class ServiceReqResponse {
     private int statusCode;
     private String statusName;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-    private Date time;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.APP_LEVEL_DATE_FORMAT , locale = "en")
+    private Date scheduled;
 
     private Error error;
 
-    public ServiceReqResponse(String serviceReqCode, int statusCode, String statusName, Date time) {
+    public ServiceReqResponse(String serviceReqCode, int statusCode, String statusName, Date scheduled) {
         this.serviceReqCode = serviceReqCode;
         this.statusCode = statusCode;
         this.statusName = statusName;
-        this.time = time;
+        this.scheduled = scheduled;
     }
 
     public ServiceReqResponse(Error error) {
@@ -53,12 +54,12 @@ public class ServiceReqResponse {
         this.statusName = statusName;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getScheduled() {
+        return scheduled;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setScheduled(Date scheduled) {
+        this.scheduled = scheduled;
     }
 
     public Error getError() {

@@ -2,6 +2,7 @@ package com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicer
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
 import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
 import com.indiacleantool.cleantool.web.models.users.company.Company;
@@ -99,7 +100,8 @@ public class ServiceRequest {
     private String serviceName;
 
     @Transient
-    private String time;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.APP_LEVEL_DATE_FORMAT , locale = "en")
+    private Date scheduled;
 
 
     public String getAssignedEmployeeCode() {
@@ -294,14 +296,13 @@ public class ServiceRequest {
         this.serviceName = serviceName;
     }
 
-    public String getTime() {
-        return time;
+    public Date getScheduled() {
+        return scheduled;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setScheduled(Date scheduled) {
+        this.scheduled = scheduled;
     }
-
 
     public String getMobileUserName() {
         return mobileUserName;

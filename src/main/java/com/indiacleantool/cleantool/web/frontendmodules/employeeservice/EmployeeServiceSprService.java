@@ -107,7 +107,10 @@ public class EmployeeServiceSprService {
         );
     }
 
-
-
+    public List<EmployeeService> findByCompanyCodeAndServiceCode(String companyCode,String serviceCode){
+        return repository.findByCompanyCodeAndServiceCode(companyCode,serviceCode).orElseThrow(() -> {
+            throw new EmployeeServiceException("Employee are not available to assigne this service");
+        });
+    }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/company/employee")
@@ -37,9 +38,9 @@ public class EmployeeController {
         return new ResponseEntity<>(service.findByEmployeeCode(employeeCode),HttpStatus.OK);
     }
 
-    @GetMapping("/companyemployee/{companyCode}")
-    public ResponseEntity<?> getEmployeeByCompanyCode(@PathVariable String companyCode){
-        return new ResponseEntity<>(service.findAllByCompanyCode(companyCode),HttpStatus.OK);
+    @GetMapping("/companyemployee")
+    public ResponseEntity<?> getAllCompanyEmployee(Principal principal){
+        return new ResponseEntity<>(service.findAllByCompanyCode(principal.getName()),HttpStatus.OK);
     }
 
     @GetMapping("/all")

@@ -1,12 +1,14 @@
 package com.indiacleantool.cleantool.web.models.common.timeslots;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.indiacleantool.cleantool.common.Constants;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+
 
 @Entity
 public class TimeSlots {
@@ -17,7 +19,7 @@ public class TimeSlots {
 
     private String slotCode;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.APP_LEVEL_DATE_FORMAT , locale = "en")
     private Date time;
 
     public TimeSlots() {

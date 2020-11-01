@@ -29,7 +29,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceSprService {
@@ -47,13 +49,14 @@ public class BookServiceSprService {
     private EmployeeSprService employeeSprService;
 
     @Autowired
+    private EmployeeServiceSprService employeeServiceSprService;
+
+    @Autowired
     private StaticServicesService servicesService;
 
     @Autowired
     private TimeSlotsService timeSlotsService;
 
-    @Autowired
-    private EmployeeServiceSprService employeeServiceSprService;
 
     public ServiceReqResponse saveServiceRequest(ServiceRequest request){
 
@@ -118,19 +121,20 @@ public class BookServiceSprService {
             requestList.forEach((serviceRequest -> {
                 serviceRequest.setCompanyName(serviceRequest.getCompany().getCompanyName());
 
-                serviceRequest.setAssignedEmployeeName(
-                        serviceRequest.getAssignedEmployee() != null ? serviceRequest.getAssignedEmployee().getFirstName()
-                                + " " + serviceRequest.getAssignedEmployee().getLastName() : null);
-
+                if(serviceRequest.getAssignedEmployee()!=null){
+                    serviceRequest.setAssignedEmployeeName(serviceRequest.getAssignedEmployee().getFirstName()
+                            + " "+serviceRequest.getAssignedEmployee().getLastName());
+                    serviceRequest.setAssignedEmployeeMobile(serviceRequest.getAssignedEmployee().getMobile());
+                }
 
                 serviceRequest.setServiceName(serviceRequest.getServices().getServiceName());
-                serviceRequest.setTime(serviceRequest.getTimeSlots().getTime().toString());
+                serviceRequest.setScheduled(serviceRequest.getTimeSlots().getTime());
             }));
 
             response = new PendingServiceRequestResponse(requestList);
 
         }catch (Exception e){
-            response = new PendingServiceRequestResponse(new Error("No pending service available"));
+            response = new PendingServiceRequestResponse(new Error(e.getMessage()));
         }
 
         return response;
@@ -155,21 +159,30 @@ public class BookServiceSprService {
                 serviceRequest.setMobileUserName(serviceRequest.getMobileUser().getFirstName() + " " +
                                         serviceRequest.getMobileUser().getLastName());
 
-                serviceRequest.setAssignedEmployeeName(
-                        serviceRequest.getAssignedEmployee()!=null ? serviceRequest.getAssignedEmployee().getFirstName()
-                                + " "+serviceRequest.getAssignedEmployee().getLastName(): null);
-
+                if(serviceRequest.getAssignedEmployee()!=null){
+                    serviceRequest.setAssignedEmployeeName(serviceRequest.getAssignedEmployee().getFirstName()
+                            + " "+serviceRequest.getAssignedEmployee().getLastName());
+                    serviceRequest.setAssignedEmployeeMobile(serviceRequest.getAssignedEmployee().getMobile());
+                }
 
                 serviceRequest.setServiceName(serviceRequest.getServices().getServiceName());
-                serviceRequest.setTime(serviceRequest.getTimeSlots().getTime().toString());
+                serviceRequest.setScheduled(serviceRequest.getTimeSlots().getTime());
             }));
 
             response = new PendingServiceRequestResponse(requestList);
 
         }catch (Exception e){
-            response = new PendingServiceRequestResponse(new Error("No pending service available"));
+            response = new PendingServiceRequestResponse(new Error(e.getMessage()));
         }
         return response;
+    }
+
+
+    public List<String> getCompanyAvailableEmployeeByServiceCode(String companyCode,String serviceCode){
+       return employeeServiceSprService
+               .findByCompanyCodeAndServiceCode(companyCode,serviceCode)
+               .stream().map(EmployeeService::getEmployeeCode)
+               .collect(Collectors.toList());
     }
 
 
@@ -179,7 +192,7 @@ public class BookServiceSprService {
 
         try{
             ServiceRequest serviceRequest = findByServiceReqCode(request.getServiceReqCode());
-            Employee employee = this.employeeSprService.findByEmployeeCode(request.getAssignedEmployeeCode());
+            Employee employee = employeeSprService.findByEmployeeCode(request.getAssignedEmployeeCode());
 
             ///checking if employee has required service code assigned
 

@@ -45,9 +45,18 @@ public class BookServiceController {
     }
 
 
+    @GetMapping("/availableemployee/{serviceCode}")
+    public ResponseEntity<?> getAvailableEmployeeForService(@PathVariable("serviceCode") String serviceCode,
+                                                            Principal principal){
+        return new ResponseEntity<>(service.getCompanyAvailableEmployeeByServiceCode(
+                principal.getName(),serviceCode)
+                ,HttpStatus.OK);
+    }
+
+
     @PostMapping("/assigneemployee")
     public ResponseEntity<?> assigneEmployeeToServiceRequest(@Valid @RequestBody AssignEmployeeRequest assignEmployeeRequest, BindingResult result,
-                                            Principal principal){
+                                                             Principal principal){
 
         ResponseEntity<?> erroMap = mapValidationExceptionService.validateRESTRequest(result);
         if(erroMap!=null){
