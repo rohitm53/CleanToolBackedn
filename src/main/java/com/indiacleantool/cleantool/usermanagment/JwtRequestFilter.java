@@ -33,7 +33,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         try{
 
-            String jwt = getJWTfromRequest(request);
+            String jwt = getJwtFromRequest(request);
 
             if(StringUtils.hasText(jwt) && jwtUtil.validateJwtToken(jwt) &&
                                         SecurityContextHolder.getContext().getAuthentication()==null){
@@ -56,7 +56,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
 
-    private String getJWTfromRequest(HttpServletRequest httpServletRequest){
+    private String getJwtFromRequest(HttpServletRequest httpServletRequest){
 
         String bearerToken = httpServletRequest.getHeader(HEADER_STRING);
 

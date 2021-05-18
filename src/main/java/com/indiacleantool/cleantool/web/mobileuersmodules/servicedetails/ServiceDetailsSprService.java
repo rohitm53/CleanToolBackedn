@@ -7,16 +7,13 @@ import com.indiacleantool.cleantool.web.models.mobileusermodals.serviceproviderc
 import com.indiacleantool.cleantool.web.models.mobileusermodals.serviceprovidercompany.ServiceProviderDetailResponse;
 import com.indiacleantool.cleantool.web.models.users.company.Company;
 import com.indiacleantool.cleantool.web.models.users.company.CompanyCodeView;
-import com.indiacleantool.cleantool.web.frontendmodules.companyservice.CompanyServiceSprService;
-import com.indiacleantool.cleantool.web.frontendmodules.employeeservice.EmployeeServiceSprService;
-import com.indiacleantool.cleantool.web.frontendmodules.users.company.CompanyService;
+import com.indiacleantool.cleantool.web.companymodules.companyservice.CompanyServiceSprService;
+import com.indiacleantool.cleantool.web.companymodules.employeeservice.EmployeeServiceSprService;
+import com.indiacleantool.cleantool.web.companymodules.users.company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @Service

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.indiacleantool.cleantool.common.Constants;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
-import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
+import com.indiacleantool.cleantool.web.models.companymodals.staticservice.Services;
 import com.indiacleantool.cleantool.web.models.users.company.Company;
 import com.indiacleantool.cleantool.web.models.users.employee.Employee;
 import com.indiacleantool.cleantool.web.models.users.mobileuser.MobileUser;

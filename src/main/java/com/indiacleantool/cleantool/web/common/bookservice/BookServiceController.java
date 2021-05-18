@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.web.common.bookservice;
 
 import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
-import com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.web.models.companymodals.assignemployee.AssignEmployeeRequest;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

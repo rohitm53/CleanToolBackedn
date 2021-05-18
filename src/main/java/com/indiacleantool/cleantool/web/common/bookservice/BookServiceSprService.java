@@ -8,17 +8,17 @@ import com.indiacleantool.cleantool.web.exceptions.timeslots.TimeSlotCodeExcepti
 import com.indiacleantool.cleantool.web.exceptions.userexception.company.CompanyCodeException;
 import com.indiacleantool.cleantool.web.exceptions.userexception.employees.EmployeeCodeException;
 import com.indiacleantool.cleantool.web.exceptions.userexception.mobile.MobileUserCodeException;
-import com.indiacleantool.cleantool.web.frontendmodules.employees.EmployeeSprService;
-import com.indiacleantool.cleantool.web.frontendmodules.employeeservice.EmployeeServiceSprService;
-import com.indiacleantool.cleantool.web.frontendmodules.staticservices.StaticServicesService;
-import com.indiacleantool.cleantool.web.frontendmodules.users.company.CompanyService;
-import com.indiacleantool.cleantool.web.frontendmodules.users.mobileuser.MobileUserService;
+import com.indiacleantool.cleantool.web.companymodules.employees.EmployeeSprService;
+import com.indiacleantool.cleantool.web.companymodules.employeeservice.EmployeeServiceSprService;
+import com.indiacleantool.cleantool.web.companymodules.staticservices.StaticServicesService;
+import com.indiacleantool.cleantool.web.companymodules.users.company.CompanyService;
+import com.indiacleantool.cleantool.web.companymodules.users.mobileuser.MobileUserService;
 import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
 import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
-import com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee.AssignEmployeeRequest;
-import com.indiacleantool.cleantool.web.models.frontendmodals.assignemployee.AssignEmployeeResponse;
-import com.indiacleantool.cleantool.web.models.frontendmodals.employeeservice.EmployeeService;
-import com.indiacleantool.cleantool.web.models.frontendmodals.staticservice.Services;
+import com.indiacleantool.cleantool.web.models.companymodals.assignemployee.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.web.models.companymodals.assignemployee.AssignEmployeeResponse;
+import com.indiacleantool.cleantool.web.models.companymodals.employeeservice.EmployeeService;
+import com.indiacleantool.cleantool.web.models.companymodals.staticservice.Services;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.PendingServiceRequestResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceReqResponse;
 import com.indiacleantool.cleantool.web.models.mobileusermodals.bookingservicerequest.ServiceRequest;
@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -233,10 +233,15 @@ public class BookServiceSprService {
     }
 
 
-    public ServiceRequest findByServiceReqCode(String serviceReqCode){
-        return repository.findByServiceReqCode(serviceReqCode).orElseThrow(()->{
+    public ServiceRequest findByServiceReqCode(String serviceReqCode)  {
+
+        Optional<ServiceRequest> serviceRequest = repository.findByServiceReqCode(serviceReqCode);
+        if(serviceRequest.isPresent()){
+            return serviceRequest.get();
+        }else{
             throw  new ServiceRequestException("No Service available with serviceReqCode : "+serviceReqCode);
-        });
+        }
+
     }
 
 }
