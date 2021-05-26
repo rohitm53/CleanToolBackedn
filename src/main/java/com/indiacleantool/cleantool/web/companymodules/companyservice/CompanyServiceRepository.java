@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.web.companymodules.companyservice;
 
-import com.indiacleantool.cleantool.web.models.companymodals.companyservice.CompanyService;
-import com.indiacleantool.cleantool.web.models.users.company.CompanyCodeView;
+import com.indiacleantool.cleantool.datamodels.companymodals.companyservice.entity.CompanyService;
+import com.indiacleantool.cleantool.datamodels.users.company.CompanyCodeView;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

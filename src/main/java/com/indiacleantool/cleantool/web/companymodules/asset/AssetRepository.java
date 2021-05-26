@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.companymodules.asset;
 
-import com.indiacleantool.cleantool.web.models.companymodals.assets.Asset;
+import com.indiacleantool.cleantool.datamodels.companymodals.assets.Asset;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

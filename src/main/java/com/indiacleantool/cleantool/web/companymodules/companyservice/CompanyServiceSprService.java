@@ -1,9 +1,9 @@
 package com.indiacleantool.cleantool.web.companymodules.companyservice;
 
-import com.indiacleantool.cleantool.web.models.companymodals.staticservice.Services;
-import com.indiacleantool.cleantool.web.models.companymodals.companyservice.CompanyService;
-import com.indiacleantool.cleantool.web.models.users.company.CompanyCodeView;
-import com.indiacleantool.cleantool.web.exceptions.companyservice.CompanyServiceException;
+import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
+import com.indiacleantool.cleantool.datamodels.companymodals.companyservice.entity.CompanyService;
+import com.indiacleantool.cleantool.datamodels.users.company.CompanyCodeView;
+import com.indiacleantool.cleantool.exceptions.companyservice.CompanyServiceException;
 import com.indiacleantool.cleantool.web.companymodules.staticservices.StaticServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

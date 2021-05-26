@@ -225,8 +225,8 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
 8. SP to generate Service Requeste Code
 
     DELIMITER $$
-    drop procedure if exists sp_Genarate_Service_RequestCode;
-    CREATE PROCEDURE sp_Genarate_Service_RequestCode (in service_req_id int, out service_req_code varchar(50))
+    drop procedure if exists sp_Generate_Service_RequestCode;
+    CREATE PROCEDURE sp_Generate_Service_RequestCode (in service_req_id int, out service_req_code varchar(50))
     begin
     			select concat(upper(company_code) , upper(mobile_user_code) , upper(service_code),floor(RAND()*10000))
     						into service_req_code  from service_request where id=service_req_id;

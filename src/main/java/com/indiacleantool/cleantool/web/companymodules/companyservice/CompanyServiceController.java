@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.web.companymodules.companyservice;
 
-import com.indiacleantool.cleantool.web.models.companymodals.companyservice.CompanyServiceRequest;
-import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
+import com.indiacleantool.cleantool.datamodels.companymodals.companyservice.exchange.CompanyServiceRequest;
+import com.indiacleantool.cleantool.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/company/companyservice")
+@RequestMapping("/api/company/company-service")
 public class CompanyServiceController {
 
     @Autowired

@@ -1,6 +1,6 @@
 package com.indiacleantool.cleantool.web.companymodules.staticservices;
 
-import com.indiacleantool.cleantool.web.models.companymodals.staticservice.Services;
+import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

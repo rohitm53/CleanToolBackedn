@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.web.companymodules.employees;
 
-import com.indiacleantool.cleantool.web.models.users.employee.Employee;
-import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
+import com.indiacleantool.cleantool.datamodels.users.employee.Employee;
+import com.indiacleantool.cleantool.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +38,7 @@ public class EmployeeController {
         return new ResponseEntity<>(service.findByEmployeeCode(employeeCode),HttpStatus.OK);
     }
 
-    @GetMapping("/companyemployee")
+    @GetMapping("/company-employee")
     public ResponseEntity<?> getAllCompanyEmployee(Principal principal){
         return new ResponseEntity<>(service.findAllByCompanyCode(principal.getName()),HttpStatus.OK);
     }

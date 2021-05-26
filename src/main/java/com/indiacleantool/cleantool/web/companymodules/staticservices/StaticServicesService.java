@@ -1,9 +1,17 @@
 package com.indiacleantool.cleantool.web.companymodules.staticservices;
 
-import com.indiacleantool.cleantool.web.models.companymodals.staticservice.Services;
-import com.indiacleantool.cleantool.web.exceptions.servicecode.ServiceCodeException;
+import com.indiacleantool.cleantool.common.collectionUtils.ListUtils;
+import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
+import com.indiacleantool.cleantool.exceptions.servicecode.ServiceCodeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class StaticServicesService {
@@ -30,6 +38,18 @@ public class StaticServicesService {
             throw new ServiceCodeException("No Service available with code '"+serviceCode+"'.");
         }
         return services;
+    }
+
+
+    public Map<String ,Services> getAllServiceDataInMap(){
+
+        Map<String ,Services> hmServices = new HashMap<>();
+        Iterable<Services> iterable  = repository.findAll();
+
+        hmServices=  ListUtils.convertIterableToStream(iterable)
+                .collect(Collectors.toMap(Services::getServiceCode, Function.identity()));
+
+        return hmServices;
     }
 
     public void deleteService(String serviceCode){

@@ -1,10 +1,10 @@
 package com.indiacleantool.cleantool.web.companymodules.employeeservice;
 
-import com.indiacleantool.cleantool.web.models.companymodals.employeeservice.EmployeeService;
-import com.indiacleantool.cleantool.web.models.companymodals.employeeservice.EmployeeServiceRelation;
-import com.indiacleantool.cleantool.web.models.companymodals.employeeservice.EmployeeServiceRequest;
-import com.indiacleantool.cleantool.web.models.companymodals.employeeservice.EmployeeServiceRequestBody;
-import com.indiacleantool.cleantool.web.exceptions.employeeservice.EmployeeServiceException;
+import com.indiacleantool.cleantool.datamodels.companymodals.employeeservice.entity.EmployeeService;
+import com.indiacleantool.cleantool.datamodels.companymodals.employeeservice.EmployeeServiceRelation;
+import com.indiacleantool.cleantool.datamodels.companymodals.employeeservice.exchange.EmployeeServiceRequest;
+import com.indiacleantool.cleantool.datamodels.companymodals.employeeservice.exchange.EmployeeServiceRequestBody;
+import com.indiacleantool.cleantool.exceptions.employeeservice.EmployeeServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,11 +88,9 @@ public class EmployeeServiceSprService {
         return listEmployeeService;
     }
 
-    public long countByCompanyCodeNServiceCode(String companyCode,String serviceCode) {
-        return repository.countByCompanyCodeAndServiceCode(companyCode,serviceCode);
+    public long countByCompanyCode(String companyCode) {
+        return repository.countByCompanyCode(companyCode);
     }
-
-
 
 
     public EmployeeService findByCompanyCodeAndServiceCodeAndEmployeeCode(

@@ -1,15 +1,15 @@
 package com.indiacleantool.cleantool.web.mobileuersmodules.servicedetails;
 
-import com.indiacleantool.cleantool.web.common.timeslots.TimeSlotsService;
-import com.indiacleantool.cleantool.web.models.common.errormodels.Error;
-import com.indiacleantool.cleantool.web.models.common.timeslots.TimeSlots;
-import com.indiacleantool.cleantool.web.models.mobileusermodals.serviceprovidercompany.ServiceProviderCompanyDetails;
-import com.indiacleantool.cleantool.web.models.mobileusermodals.serviceprovidercompany.ServiceProviderDetailResponse;
-import com.indiacleantool.cleantool.web.models.users.company.Company;
-import com.indiacleantool.cleantool.web.models.users.company.CompanyCodeView;
+import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
+import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.mobileusermodals.serviceprovidercompany.ServiceProviderCompanyDetails;
+import com.indiacleantool.cleantool.datamodels.mobileusermodals.serviceprovidercompany.ServiceProviderDetailResponse;
+import com.indiacleantool.cleantool.datamodels.users.company.Company;
+import com.indiacleantool.cleantool.datamodels.users.company.CompanyCodeView;
 import com.indiacleantool.cleantool.web.companymodules.companyservice.CompanyServiceSprService;
 import com.indiacleantool.cleantool.web.companymodules.employeeservice.EmployeeServiceSprService;
-import com.indiacleantool.cleantool.web.companymodules.users.company.CompanyService;
+import com.indiacleantool.cleantool.web.common.users.company.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,14 +48,14 @@ public class ServiceDetailsSprService {
 
             for(CompanyCodeView companyCodeView : companyCodeViewList){
 
-                ///Step 2 , Get all company deatails whose company codes got in step 1
+                ///Step 2 , Get all company details whose company codes got in step 1
                 String companyCode = companyCodeView.getCompanyCode();
                 Company company = companyService.findByCompanyCode(companyCode);
 
                 ///Step 3 , Get all Employee codes whose company codes matches with
-                // companycode of step 1 and provide service_code in order to get count of employees
+                // companyCode of step 1 and provide service_code in order to get count of employees
 
-                long count = employeeServiceSprService.countByCompanyCodeNServiceCode(companyCode,service_code);
+                long count = employeeServiceSprService.countByCompanyCode(companyCode);
                 if(count>0){
                     lisServiceProviderCompanyDetails.add(new ServiceProviderCompanyDetails(company,count,timeSlotsList));
                 }
