@@ -94,6 +94,9 @@ public class ServiceRequestEntity {
     private String scheduleDateStr;
 
     @Transient
+    private String scheduleTime;
+
+    @Transient
     private String companyName;
 
     @Transient
@@ -303,6 +306,14 @@ public class ServiceRequestEntity {
 
     public void setMobileUserName(String mobileUserName) {
         this.mobileUserName = mobileUserName;
+    }
+
+    public String getScheduleTime() {
+        return scheduleTime;
+    }
+
+    public void setScheduleTime(String scheduleTime) {
+        this.scheduleTime = scheduleTime;
     }
 
     @PrePersist

@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SingleServiceRequestHandlerService {
@@ -157,6 +158,7 @@ public class SingleServiceRequestHandlerService {
                 }
 
                 serviceRequest.setCompanyName(serviceRequest.getCompany().getCompanyName());
+                serviceRequest.setScheduleTime(serviceRequest.getTimeSlots().getTime().toString());
 
                 serviceRequest.setMobileUserName(serviceRequest.getMobileUser().getFirstName() + " " +
                         serviceRequest.getMobileUser().getLastName());
@@ -168,6 +170,11 @@ public class SingleServiceRequestHandlerService {
                 }
 
             }));
+
+            requestList = requestList.stream()
+                    .sorted(Comparator.comparing(ServiceRequestEntity::getScheduleDate)
+                    .thenComparing(o -> o.getTimeSlots().getTime()))
+                    .collect(Collectors.toList());
 
             response = new PendingServiceRequestResponse(requestList);
 
