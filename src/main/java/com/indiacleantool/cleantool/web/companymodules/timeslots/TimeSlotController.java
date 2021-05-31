@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/company/time-slots")
+@RequestMapping("/api/company/static/time-slots")
 public class TimeSlotController {
 
     @Autowired

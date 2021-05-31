@@ -20,7 +20,7 @@ public class StaticServiceController {
     @Autowired
     private MapValidationExceptionService mapValidationExceptionService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> createNewService(@Valid @RequestBody Services services , BindingResult result){
         ResponseEntity<?> errorMap = mapValidationExceptionService.validateRESTRequest(result);
         if(errorMap!=null){

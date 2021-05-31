@@ -2,18 +2,18 @@ package com.indiacleantool.cleantool.datamodels.common.errormodels;
 
 public class Error {
 
-    private String errormsg;
+    private String errorMsg;
 
 
     public Error(String errormsg) {
-        this.errormsg = errormsg;
+        this.errorMsg = errormsg;
     }
 
-    public String getErrormsg() {
-        return errormsg;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public void setErrormsg(String errormsg) {
-        this.errormsg = errormsg;
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 }

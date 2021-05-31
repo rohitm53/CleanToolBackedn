@@ -91,9 +91,6 @@ public class ServiceRequestEntity {
 
     ////Transient objects Only for Frontend and Mobile user request/response
     @Transient
-    private String scheduleDateStr;
-
-    @Transient
     private String scheduleTime;
 
     @Transient
@@ -233,14 +230,6 @@ public class ServiceRequestEntity {
 
     public void setScheduleDate(LocalDate scheduleDate) {
         this.scheduleDate = scheduleDate;
-    }
-
-    public String getScheduleDateStr() {
-        return scheduleDateStr;
-    }
-
-    public void setScheduleDateStr(String scheduleDateStr) {
-        this.scheduleDateStr = scheduleDateStr;
     }
 
     public String getServiceReqCode() {

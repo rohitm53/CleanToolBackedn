@@ -20,20 +20,20 @@ public class TimeSlots {
 
     private String slotCode;
 
-    private LocalTime time;
+    private LocalTime slotTime;
 
     public TimeSlots() {
     }
 
-    public TimeSlots(Long id, String slotCode, LocalTime time) {
+    public TimeSlots(Long id, String slotCode, LocalTime slotTime) {
         this.id = id;
         this.slotCode = slotCode;
-        this.time = time;
+        this.slotTime = slotTime;
     }
 
-    public TimeSlots(String slotCode, LocalTime time) {
+    public TimeSlots(String slotCode, LocalTime slotTime) {
         this.slotCode = slotCode;
-        this.time = time;
+        this.slotTime = slotTime;
     }
 
     public Long getId() {
@@ -53,10 +53,10 @@ public class TimeSlots {
     }
 
     public LocalTime getTime() {
-        return time;
+        return slotTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setTime(LocalTime slotTime) {
+        this.slotTime = slotTime;
     }
 }

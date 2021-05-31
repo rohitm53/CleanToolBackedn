@@ -1,7 +1,10 @@
 package com.indiacleantool.cleantool.exceptions;
 
+import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
+import com.indiacleantool.cleantool.datamodels.common.errormodels.exchange.GenericResponse;
 import com.indiacleantool.cleantool.exceptions.asset.AssetCodeException;
 import com.indiacleantool.cleantool.exceptions.asset.AssetExceptionResponse;
+import com.indiacleantool.cleantool.exceptions.common.CommonGenericException;
 import com.indiacleantool.cleantool.exceptions.companyservice.CompanyServiceException;
 import com.indiacleantool.cleantool.exceptions.companyservice.CompanyServiceExceptionResponse;
 import com.indiacleantool.cleantool.exceptions.userexception.company.CompanyCodeExceptionResponse;
@@ -22,7 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 @RestController
-public class CustomeResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public final ResponseEntity<?> handleCompanyCodeException(CompanyCodeException ex,WebRequest req){
@@ -36,8 +39,6 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
         EmployeeCodeExceptionResponse response = new EmployeeCodeExceptionResponse(ex.getMessage());
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
-
-    
 
     @ExceptionHandler
     public final ResponseEntity<?> handleServiceCodeException(ServiceCodeException ex, WebRequest req){
@@ -64,6 +65,14 @@ public class CustomeResponseEntityExceptionHandler extends ResponseEntityExcepti
         return new ResponseEntity<>(response,HttpStatus.BAD_REQUEST);
     }
 
+
+    @ExceptionHandler
+    public final ResponseEntity<?> handleCommonGenericException(CommonGenericException ex,WebRequest req){
+        GenericResponse<String> genericResponse = new GenericResponse<String>(
+                new Error(ex.getMessage())
+        );
+        return new ResponseEntity<>(genericResponse,HttpStatus.BAD_REQUEST);
+    }
 
 
 

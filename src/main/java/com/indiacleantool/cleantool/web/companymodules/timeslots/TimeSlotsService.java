@@ -3,6 +3,7 @@ package com.indiacleantool.cleantool.web.companymodules.timeslots;
 import com.indiacleantool.cleantool.exceptions.timeslots.TimeSlotCodeException;
 import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,12 +38,15 @@ public class TimeSlotsService {
         List<TimeSlots> timeSlotsList = new ArrayList<>();
 
         LocalTime localTime  = LocalTime.of(8,0);
-        for(int i=1; i<=24;i++){
+        for(int i=1; i<=11;i++){
             timeSlotsList.add(new TimeSlots("T"+i,localTime));
             localTime  = localTime.plusHours(1);
         }
         repository.truncateTimeSlots();
         repository.saveAll(timeSlotsList);
+    }
 
+    public List<TimeSlots> getTimeSlotByStartNEndTime(String startTime ,String endTime ){
+        return repository.getTimeSlotByStartNEndTime(startTime,endTime);
     }
 }

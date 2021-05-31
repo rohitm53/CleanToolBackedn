@@ -222,7 +222,7 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
 
 ------------------------------------------------------------------------------------------------------------------------
 
-8. SP to generate Service Requeste Code
+8. SP to generate Service Request Code
 
     DELIMITER $$
     drop procedure if exists sp_Generate_Service_RequestCode;
@@ -232,12 +232,12 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
     						into service_req_code  from service_request where id=service_req_id;
 
                 update service_request set service_req_code=service_req_code where id=service_req_id;
-            end$$
+    end$$
     DELIMITER ;
 
 
     set @service_req_code:='';
-    call sp_Genarate_Service_RequestCode(1,@service_req_code);
+    call sp_Generate_Service_RequestCode(1,@service_req_code);
 
     select @service_req_code;
 
