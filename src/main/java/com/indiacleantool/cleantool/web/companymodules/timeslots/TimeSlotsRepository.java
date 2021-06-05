@@ -1,26 +1,27 @@
 package com.indiacleantool.cleantool.web.companymodules.timeslots;
 
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
 import java.util.List;
 
-public interface TimeSlotsRepository extends CrudRepository<TimeSlots,Long> {
+@Repository
+public interface TimeSlotsRepository extends CrudRepository<TimeSlot,Long> {
 
-    TimeSlots findBySlotCodeIgnoreCase(String slotCode);
+    TimeSlot findBySlotCodeIgnoreCase(String slotCode);
 
     @Modifying
-    @Query(value = "truncate table time_slots" , nativeQuery = true)
+    @Query(value = "truncate table time_slot" , nativeQuery = true)
     void truncateTimeSlots();
 
-    @Query(value = "select * from time_slots where time(slot_time) " +
+    @Query(value = "select * from time_slot where time(slot_time) " +
             " between cast(:startTime as time) and cast(:endTime as time) " +
             " order by slot_time asc " ,nativeQuery = true)
-    List<TimeSlots> getTimeSlotByStartNEndTime(
+    List<TimeSlot> getTimeSlotByStartNEndTime(
             @Param("startTime") String startTime ,
             @Param("endTime") String endTime
     );

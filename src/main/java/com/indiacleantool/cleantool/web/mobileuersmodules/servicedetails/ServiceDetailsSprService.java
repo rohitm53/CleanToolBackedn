@@ -2,7 +2,7 @@ package com.indiacleantool.cleantool.web.mobileuersmodules.servicedetails;
 
 import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import com.indiacleantool.cleantool.datamodels.mobileusermodals.serviceprovidercompany.ServiceProviderCompanyDetails;
 import com.indiacleantool.cleantool.datamodels.mobileusermodals.serviceprovidercompany.ServiceProviderDetailResponse;
 import com.indiacleantool.cleantool.datamodels.users.company.Company;
@@ -37,7 +37,7 @@ public class ServiceDetailsSprService {
 
         ServiceProviderDetailResponse response =null;
 
-        List<TimeSlots> timeSlotsList = timeSlotsService.findAll();
+        List<TimeSlot> timeSlotList = timeSlotsService.findAll();
 
         ///Step 1 , Get all company codes who provide service with provided service_code
         List<CompanyCodeView> companyCodeViewList = companyServiceSprService.getCompanyCodeByServiceCode(service_code);
@@ -57,7 +57,7 @@ public class ServiceDetailsSprService {
 
                 long count = employeeServiceSprService.countByCompanyCode(companyCode);
                 if(count>0){
-                    lisServiceProviderCompanyDetails.add(new ServiceProviderCompanyDetails(company,count,timeSlotsList));
+                    lisServiceProviderCompanyDetails.add(new ServiceProviderCompanyDetails(company,count, timeSlotList));
                 }
             }
 

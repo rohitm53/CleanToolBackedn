@@ -32,7 +32,7 @@ public class CompanyServiceController {
 
     @GetMapping("/{companyCode}")
     public ResponseEntity<?> getServiceByCompanyCode(@PathVariable String companyCode){
-        return new ResponseEntity<>(service.getServicesForCompanybyCompanyCode(companyCode),HttpStatus.OK);
+        return new ResponseEntity<>(service.getServicesForCompanyByCompanyCode(companyCode),HttpStatus.OK);
     }
 
 }

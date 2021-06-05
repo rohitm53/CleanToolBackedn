@@ -1,10 +1,11 @@
 package com.indiacleantool.cleantool.web.common.allservicerequesthandler;
 
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.entity.EmployeeAssignedServiceEntity;
 import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.AssignEmployeeRequest;
 import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.AssignEmployeeResponse;
+import com.indiacleantool.cleantool.datamodels.companymodals.companytimeslots.CompanyTimeSlotsEntity;
 import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
 import com.indiacleantool.cleantool.datamodels.mobileusermodals.bookingservicerequest.PendingServiceRequestResponse;
 import com.indiacleantool.cleantool.datamodels.mobileusermodals.bookingservicerequest.ServiceReqResponse;
@@ -19,6 +20,7 @@ import com.indiacleantool.cleantool.exceptions.timeslots.TimeSlotCodeException;
 import com.indiacleantool.cleantool.exceptions.userexception.company.CompanyCodeException;
 import com.indiacleantool.cleantool.exceptions.userexception.employees.EmployeeCodeException;
 import com.indiacleantool.cleantool.exceptions.userexception.mobile.MobileUserCodeException;
+import com.indiacleantool.cleantool.web.companymodules.companyavailabletimeslots.CompanyTimeSlotsService;
 import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
 import com.indiacleantool.cleantool.web.common.users.company.CompanyService;
 import com.indiacleantool.cleantool.web.common.users.mobileuser.MobileUserService;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -56,6 +59,9 @@ public class SingleServiceRequestHandlerService {
     @Autowired
     private EmployeeAssignedServiceRepository employeeAssignedServiceRepository;
 
+    @Autowired
+    private CompanyTimeSlotsService companyTimeSlotsService;
+
     public ServiceReqResponse saveServiceRequest(ServiceRequestEntity request){
 
         ServiceReqResponse reqResponse = null;
@@ -64,12 +70,12 @@ public class SingleServiceRequestHandlerService {
             Company company = companyService.findByCompanyCode(request.getCompanyCode());
             MobileUser mobileUser = mobileUserService.findMobileUserByCode(request.getMobileUserCode());
             Services services = servicesDataService.findByServiceCode(request.getServiceCode());
-            TimeSlots timeSlots = timeSlotsService.findBySlotCode(request.getTimeSlotCode());
+            TimeSlot timeSlot = timeSlotsService.findBySlotCode(request.getTimeSlotCode());
 
             request.setCompany(company);
             request.setServices(services);
             request.setMobileUser(mobileUser);
-            request.setTimeSlots(timeSlots);
+            request.setTimeSlot(timeSlot);
 
             request.setStatusCode(ServiceRequestEntity.ServiceRequestStatus.PENDING.getStatusCode());
 
@@ -158,7 +164,7 @@ public class SingleServiceRequestHandlerService {
                 }
 
                 serviceRequest.setCompanyName(serviceRequest.getCompany().getCompanyName());
-                serviceRequest.setScheduleTime(serviceRequest.getTimeSlots().getTime().toString());
+                serviceRequest.setScheduleTime(serviceRequest.getTimeSlot().getTime().toString());
 
                 serviceRequest.setMobileUserName(serviceRequest.getMobileUser().getFirstName() + " " +
                         serviceRequest.getMobileUser().getLastName());
@@ -173,7 +179,7 @@ public class SingleServiceRequestHandlerService {
 
             requestList = requestList.stream()
                     .sorted(Comparator.comparing(ServiceRequestEntity::getScheduleDate)
-                    .thenComparing(o -> o.getTimeSlots().getTime()))
+                    .thenComparing(o -> o.getTimeSlot().getTime()))
                     .collect(Collectors.toList());
 
             response = new PendingServiceRequestResponse(requestList);
@@ -192,6 +198,7 @@ public class SingleServiceRequestHandlerService {
         try{
             ServiceRequestEntity serviceRequestEntity = findByServiceReqCode(request.getServiceReqCode());
             Employee employee = employeeSprService.findByEmployeeCode(request.getAssignedEmployeeCode());
+
 
 
             List<Employee> employeeList = new ArrayList<>();
@@ -213,8 +220,66 @@ public class SingleServiceRequestHandlerService {
                     serviceRequestEntity.getStatusCode()
             );
 
-            //creating EmployeeAssignedServiceEntity for Keeping Employee duties track
+            // Updating Table CompanyTimeSlots
 
+            String scheduleTimeSlotCode = serviceRequestEntity.getTimeSlotCode();
+            LocalDate scheduledDate = serviceRequestEntity.getScheduleDate();
+            String scheduleTime = serviceRequestEntity.getScheduleTime();
+
+            String nextTimeSlot = timeSlotsService.getNextTimeSlot(scheduleTimeSlotCode);
+            String prevTimSlot  = timeSlotsService.getPreviousTimeSlot(scheduleTimeSlotCode);
+
+
+            CompanyTimeSlotsEntity currentCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
+                    companyCode,
+                    scheduledDate.toString(),
+                    scheduleTimeSlotCode
+            );
+            CompanyTimeSlotsEntity prevCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
+                    companyCode,
+                    scheduledDate.toString(),
+                    prevTimSlot
+            );
+            CompanyTimeSlotsEntity nextCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
+                    companyCode,
+                    scheduledDate.toString(),
+                    nextTimeSlot
+            );
+
+            int currentTimeSlotEmpCount,prevTimeSlotEmpCount=0,nextTimeSlotEmpCount=0;
+
+            if(currentCompanyTimeSlot!=null){
+                currentTimeSlotEmpCount = currentCompanyTimeSlot.getAvailableEmployeeCount();
+                currentTimeSlotEmpCount--;
+
+                if(currentTimeSlotEmpCount>-1){
+                    currentCompanyTimeSlot.setAvailableEmployeeCount(currentTimeSlotEmpCount);
+                    companyTimeSlotsService.saveCompanyTimeSlots(currentCompanyTimeSlot);
+                }
+
+            }
+
+            if(nextCompanyTimeSlot!=null){
+                nextTimeSlotEmpCount = nextCompanyTimeSlot.getAvailableEmployeeCount();
+                nextTimeSlotEmpCount--;
+
+                if(nextTimeSlotEmpCount>-1){
+                    nextCompanyTimeSlot.setAvailableEmployeeCount(nextTimeSlotEmpCount);
+                    companyTimeSlotsService.saveCompanyTimeSlots(nextCompanyTimeSlot);
+                }
+
+            }
+
+            if(prevCompanyTimeSlot!=null){
+                prevTimeSlotEmpCount = prevCompanyTimeSlot.getAvailableEmployeeCount();
+                prevTimeSlotEmpCount--;
+                if(prevTimeSlotEmpCount>-1){
+                    prevCompanyTimeSlot.setAvailableEmployeeCount(prevTimeSlotEmpCount);
+                    companyTimeSlotsService.saveCompanyTimeSlots(prevCompanyTimeSlot);
+                }
+            }
+
+            //creating EmployeeAssignedServiceEntity for Keeping Employee duties track
             EmployeeAssignedServiceEntity employeeAssignedServiceEntity = new EmployeeAssignedServiceEntity();
             employeeAssignedServiceEntity.setServiceCode(serviceRequestEntity.getServiceCode());
             employeeAssignedServiceEntity.setCompanyCode(serviceRequestEntity.getCompanyCode());

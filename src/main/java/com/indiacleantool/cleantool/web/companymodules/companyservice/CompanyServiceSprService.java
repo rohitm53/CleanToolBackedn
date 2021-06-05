@@ -36,8 +36,8 @@ public class CompanyServiceSprService {
         return repository.saveAll(listCompanyService);
     }
 
-    public Iterable<Services> getServicesForCompanybyCompanyCode(String companyCode){
-        return staticServiceRepository.getServicesForCompanybyCompanyCode(companyCode);
+    public Iterable<Services> getServicesForCompanyByCompanyCode(String companyCode){
+        return staticServiceRepository.getServicesForCompanyByCompanyCode(companyCode);
     }
 
     public Long getCountByCompanyCode(String companyCode){

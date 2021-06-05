@@ -1,18 +1,14 @@
 package com.indiacleantool.cleantool.datamodels.common.timeslots;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.indiacleantool.cleantool.common.Constants;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalTime;
-import java.util.Date;
 
 
 @Entity
-public class TimeSlots {
+public class TimeSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,16 +18,16 @@ public class TimeSlots {
 
     private LocalTime slotTime;
 
-    public TimeSlots() {
+    public TimeSlot() {
     }
 
-    public TimeSlots(Long id, String slotCode, LocalTime slotTime) {
+    public TimeSlot(Long id, String slotCode, LocalTime slotTime) {
         this.id = id;
         this.slotCode = slotCode;
         this.slotTime = slotTime;
     }
 
-    public TimeSlots(String slotCode, LocalTime slotTime) {
+    public TimeSlot(String slotCode, LocalTime slotTime) {
         this.slotCode = slotCode;
         this.slotTime = slotTime;
     }

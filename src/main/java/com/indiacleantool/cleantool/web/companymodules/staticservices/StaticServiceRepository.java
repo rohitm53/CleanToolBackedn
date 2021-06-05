@@ -14,5 +14,5 @@ public interface StaticServiceRepository extends CrudRepository<Services,Long> {
     @Query(value = "select * from services as S join company_service as CS on " +
                    "S.service_code=CS.service_code where CS.company_code= :company_code",
            nativeQuery = true)
-    Iterable<Services> getServicesForCompanybyCompanyCode(@Param("company_code") String company_code);
+    Iterable<Services> getServicesForCompanyByCompanyCode(@Param("company_code") String company_code);
 }

@@ -1,9 +1,8 @@
 package com.indiacleantool.cleantool.web.companymodules.timeslots;
 
 import com.indiacleantool.cleantool.exceptions.timeslots.TimeSlotCodeException;
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,36 +16,47 @@ public class TimeSlotsService {
     @Autowired
     private TimeSlotsRepository repository;
 
-    public List<TimeSlots> findAll(){
-        List<TimeSlots> timeSlotsList = new ArrayList<>();
-        repository.findAll().forEach(timeSlotsList::add);
-        return timeSlotsList;
+    public List<TimeSlot> findAll(){
+        List<TimeSlot> timeSlotList = new ArrayList<>();
+        repository.findAll().forEach(timeSlotList::add);
+        return timeSlotList;
     }
 
-    public TimeSlots findBySlotCode(String slotCode){
-        TimeSlots timeSlots = repository.findBySlotCodeIgnoreCase(slotCode);
+    public TimeSlot findBySlotCode(String slotCode){
+        TimeSlot timeSlot = repository.findBySlotCodeIgnoreCase(slotCode);
 
-        if(timeSlots==null){
+        if(timeSlot ==null){
             throw new TimeSlotCodeException("No time slot available with code : "+slotCode);
         }
-        return timeSlots ;
+        return timeSlot;
     }
 
     @Transactional
     public void generateTimeSlots() {
 
-        List<TimeSlots> timeSlotsList = new ArrayList<>();
+        List<TimeSlot> timeSlotList = new ArrayList<>();
 
         LocalTime localTime  = LocalTime.of(8,0);
         for(int i=1; i<=11;i++){
-            timeSlotsList.add(new TimeSlots("T"+i,localTime));
+            timeSlotList.add(new TimeSlot("T"+i,localTime));
             localTime  = localTime.plusHours(1);
         }
         repository.truncateTimeSlots();
-        repository.saveAll(timeSlotsList);
+        repository.saveAll(timeSlotList);
     }
 
-    public List<TimeSlots> getTimeSlotByStartNEndTime(String startTime ,String endTime ){
+    public List<TimeSlot> getTimeSlotByStartNEndTime(String startTime , String endTime ){
         return repository.getTimeSlotByStartNEndTime(startTime,endTime);
+    }
+
+    public String getNextTimeSlot(String scheduleTimeSlotCode) {
+        int currentValue = Integer.parseInt(String.valueOf(scheduleTimeSlotCode.charAt(1)));
+        currentValue++;
+        return "T" + currentValue;
+    }
+    public String getPreviousTimeSlot(String scheduleTimeSlotCode) {
+        int currentValue = Integer.parseInt(String.valueOf(scheduleTimeSlotCode.charAt(1)));
+        currentValue--;
+        return "T" + currentValue;
     }
 }

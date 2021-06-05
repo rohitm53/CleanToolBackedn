@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.indiacleantool.cleantool.common.Constants;
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
 import com.indiacleantool.cleantool.datamodels.users.company.Company;
 import com.indiacleantool.cleantool.datamodels.users.employee.Employee;
@@ -66,7 +65,7 @@ public class ServiceRequestEntity {
     @ManyToOne
     @JoinColumn(name = "time_slot_id")
     @JsonIgnore
-    private TimeSlots timeSlots;
+    private TimeSlot timeSlot;
 
     @ManyToOne
     @JoinColumn(name = "mobile_user_id")
@@ -176,12 +175,12 @@ public class ServiceRequestEntity {
         this.serviceMsgId = serviceMsgId;
     }
 
-    public TimeSlots getTimeSlots() {
-        return timeSlots;
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
     }
 
-    public void setTimeSlots(TimeSlots timeSlots) {
-        this.timeSlots = timeSlots;
+    public void setTimeSlot(TimeSlot timeSlot) {
+        this.timeSlot = timeSlot;
     }
 
     public MobileUser getMobileUser() {

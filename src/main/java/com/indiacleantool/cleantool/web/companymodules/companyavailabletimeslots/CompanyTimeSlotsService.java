@@ -2,16 +2,13 @@ package com.indiacleantool.cleantool.web.companymodules.companyavailabletimeslot
 
 import com.indiacleantool.cleantool.common.collectionUtils.ListUtils;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.exchange.GenericResponse;
-import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlots;
+import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import com.indiacleantool.cleantool.datamodels.companymodals.companytimeslots.CompanyTimeSlotsEntity;
 import com.indiacleantool.cleantool.datamodels.companymodals.companytimeslots.exchange.GenerateCompanyTimeSlotRequest;
 import com.indiacleantool.cleantool.datamodels.users.company.Company;
 import com.indiacleantool.cleantool.exceptions.common.CommonGenericException;
-import com.indiacleantool.cleantool.web.common.users.company.CompanyRepository;
 import com.indiacleantool.cleantool.web.common.users.company.CompanyService;
 import com.indiacleantool.cleantool.web.companymodules.employees.EmployeeSprService;
-import com.indiacleantool.cleantool.web.companymodules.employeeservice.EmployeeServiceSprService;
-import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsRepository;
 import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +19,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,6 +35,12 @@ public class CompanyTimeSlotsService {
 
     @Autowired
     private EmployeeSprService employeeSprService;
+
+
+
+    public CompanyTimeSlotsEntity saveCompanyTimeSlots(CompanyTimeSlotsEntity companyTimeSlotsEntity){
+        return repository.save(companyTimeSlotsEntity);
+    }
 
     @Transactional
     public GenericResponse generateTimeSlots(GenerateCompanyTimeSlotRequest request, String companyCode) {
@@ -59,7 +61,7 @@ public class CompanyTimeSlotsService {
 
             companyCode = company.getCompanyCode();
 
-            List<TimeSlots> availableSlots = timeSlotsService.getTimeSlotByStartNEndTime(
+            List<TimeSlot> availableSlots = timeSlotsService.getTimeSlotByStartNEndTime(
                     starTime.toString(),
                     endTime.toString()
             );
@@ -74,12 +76,12 @@ public class CompanyTimeSlotsService {
                 );
             }else{
                 List<CompanyTimeSlotsEntity> companyTimeSlots = new ArrayList<>();
-                for(TimeSlots timeSlots  : availableSlots){
+                for(TimeSlot timeSlot : availableSlots){
                     companyTimeSlots.add(new CompanyTimeSlotsEntity(
                             companyCode,
-                            timeSlots.getSlotCode(),
+                            timeSlot.getSlotCode(),
                             currentDate,
-                            timeSlots.getTime(),
+                            timeSlot.getTime(),
                             employeeCount
                     ));
                 }
@@ -109,5 +111,9 @@ public class CompanyTimeSlotsService {
             throw new CommonGenericException("Invalid date");
         }
 
+    }
+
+    public CompanyTimeSlotsEntity getByCompanyCodeNDateNTimeSlotCode(String companyCode , String date , String timeSlotCode){
+        return repository.getByCompanyCodeNDateNTimeSlotCode(companyCode,date,timeSlotCode);
     }
 }
