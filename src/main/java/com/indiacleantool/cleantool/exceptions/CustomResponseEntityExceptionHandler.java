@@ -1,6 +1,7 @@
 package com.indiacleantool.cleantool.exceptions;
 
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
+import com.indiacleantool.cleantool.datamodels.common.errormodels.exchange.ErrorResponse;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.exchange.GenericResponse;
 import com.indiacleantool.cleantool.exceptions.asset.AssetCodeException;
 import com.indiacleantool.cleantool.exceptions.asset.AssetExceptionResponse;
@@ -68,13 +69,9 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
 
     @ExceptionHandler
     public final ResponseEntity<?> handleCommonGenericException(CommonGenericException ex,WebRequest req){
-        GenericResponse<String> genericResponse = new GenericResponse<String>(
-                new Error(ex.getMessage())
-        );
+        ErrorResponse genericResponse = new ErrorResponse(ex.getMessage());
         return new ResponseEntity<>(genericResponse,HttpStatus.BAD_REQUEST);
     }
-
-
 
 
 }

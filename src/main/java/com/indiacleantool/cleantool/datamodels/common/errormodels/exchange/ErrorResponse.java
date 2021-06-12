@@ -1,11 +1,10 @@
-package com.indiacleantool.cleantool.datamodels.common.errormodels;
+package com.indiacleantool.cleantool.datamodels.common.errormodels.exchange;
 
-public class Error {
+public class ErrorResponse {
 
     private String errorMsg;
 
-
-    public Error(String errorMsg) {
+    public ErrorResponse(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 

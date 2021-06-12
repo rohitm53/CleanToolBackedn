@@ -174,29 +174,29 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
 
 6. SP to insert service master data
 
-    DELIMITER $$
-    	drop procedure if exists sp_Intialise_Service_Master;
-    	create procedure sp_Intialise_Service_Master()
-    		begin
-    			TRUNCATE TABLE services;
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('UT','Utensils',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('MPB','Mopping/Brooming',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('BTH','Bathroom',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('TLT','Toilet',1,now());
+   DELIMITER $$
+   DROP PROCEDURE IF EXISTS sp_Initialise_Service_Master;
+   CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_Initialise_Service_Master`()
+   begin
+       			TRUNCATE TABLE services;
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('UT','Utensils',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('MPB','Mopping/Brooming',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('BTH','Bathroom',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('TLT','Toilet',1,now());
 
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('KT','Kitchen',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('OFC','Office',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('WRH','Warehouse',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('KT','Kitchen',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('OFC','Office',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('WRH','Warehouse',1,now());
 
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('CLTH','Clothes',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('DRCLNG','Dry Cleaning',1,now());
-    			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('IRNG','Ironing',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('CLTH','Clothes',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('DRCLNG','Dry Cleaning',1,now());
+       			INSERT INTO services(service_code,service_name,no_of_emp_req,create_at) VALUES ('IRNG','Ironing',1,now());
 
-    			commit;
-    		end $$
-    DELIMITER ;
+       			commit;
+       		end$$
+   DELIMITER
 
-    call sp_Intialise_Service_Master()
+    call sp_Initialise_Service_Master();
 
 ------------------------------------------------------------------------------------------------------------------------
 

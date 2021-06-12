@@ -3,8 +3,8 @@ package com.indiacleantool.cleantool.web.common.allservicerequesthandler;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
 import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
 import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.entity.EmployeeAssignedServiceEntity;
-import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.AssignEmployeeRequest;
-import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.AssignEmployeeResponse;
+import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.assignemployee.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.assignemployee.AssignEmployeeResponse;
 import com.indiacleantool.cleantool.datamodels.companymodals.companytimeslots.CompanyTimeSlotsEntity;
 import com.indiacleantool.cleantool.datamodels.companymodals.staticservice.entity.Services;
 import com.indiacleantool.cleantool.datamodels.mobileusermodals.bookingservicerequest.PendingServiceRequestResponse;
@@ -198,7 +198,7 @@ public class SingleServiceRequestHandlerService {
         try{
             ServiceRequestEntity serviceRequestEntity = findByServiceReqCode(request.getServiceReqCode());
             Employee employee = employeeSprService.findByEmployeeCode(request.getAssignedEmployeeCode());
-
+            TimeSlot scheduleTimeSlot = serviceRequestEntity.getTimeSlot();
 
 
             List<Employee> employeeList = new ArrayList<>();
@@ -226,8 +226,9 @@ public class SingleServiceRequestHandlerService {
             LocalDate scheduledDate = serviceRequestEntity.getScheduleDate();
             String scheduleTime = serviceRequestEntity.getScheduleTime();
 
-            String nextTimeSlot = timeSlotsService.getNextTimeSlot(scheduleTimeSlotCode);
-            String prevTimSlot  = timeSlotsService.getPreviousTimeSlot(scheduleTimeSlotCode);
+
+            String nextStrTimeSlot = timeSlotsService.getNextTimeSlot(scheduleTimeSlotCode);
+            String prevStrTimSlot  = timeSlotsService.getPreviousTimeSlot(scheduleTimeSlotCode);
 
 
             CompanyTimeSlotsEntity currentCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
@@ -238,12 +239,12 @@ public class SingleServiceRequestHandlerService {
             CompanyTimeSlotsEntity prevCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
                     companyCode,
                     scheduledDate.toString(),
-                    prevTimSlot
+                    prevStrTimSlot
             );
             CompanyTimeSlotsEntity nextCompanyTimeSlot = companyTimeSlotsService.getByCompanyCodeNDateNTimeSlotCode(
                     companyCode,
                     scheduledDate.toString(),
-                    nextTimeSlot
+                    nextStrTimeSlot
             );
 
             int currentTimeSlotEmpCount,prevTimeSlotEmpCount=0,nextTimeSlotEmpCount=0;
@@ -281,10 +282,12 @@ public class SingleServiceRequestHandlerService {
 
             //creating EmployeeAssignedServiceEntity for Keeping Employee duties track
             EmployeeAssignedServiceEntity employeeAssignedServiceEntity = new EmployeeAssignedServiceEntity();
-            employeeAssignedServiceEntity.setServiceCode(serviceRequestEntity.getServiceCode());
+            employeeAssignedServiceEntity.setServiceReqCode(serviceRequestEntity.getServiceReqCode());
             employeeAssignedServiceEntity.setCompanyCode(serviceRequestEntity.getCompanyCode());
             employeeAssignedServiceEntity.setEmpCode(serviceRequestEntity.getAssignedEmployeeCode());
-            employeeAssignedServiceEntity.setScheduledDate(new Date());
+            employeeAssignedServiceEntity.setScheduledDate(scheduledDate);
+            employeeAssignedServiceEntity.setScheduledTime(scheduleTimeSlot.getTime());
+            employeeAssignedServiceEntity.setExpectedCompletionTime(scheduleTimeSlot.getTime().plusHours(1));
             employeeAssignedServiceEntity.setTimeSlotCode(serviceRequestEntity.getTimeSlotCode());
             employeeAssignedServiceEntity.setMobileUserCode(serviceRequestEntity.getMobileUserCode());
 

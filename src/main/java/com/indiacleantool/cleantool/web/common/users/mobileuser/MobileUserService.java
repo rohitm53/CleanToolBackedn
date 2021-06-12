@@ -1,13 +1,16 @@
 package com.indiacleantool.cleantool.web.common.users.mobileuser;
 
 import com.indiacleantool.cleantool.common.Constants;
-import com.indiacleantool.cleantool.security.SecurityConstants;
-import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
-import com.indiacleantool.cleantool.exceptions.userexception.mobile.MobileUserCodeException;
-import com.indiacleantool.cleantool.datamodels.users.mobileuser.MobileUser;
 import com.indiacleantool.cleantool.datamodels.users.login.Role;
 import com.indiacleantool.cleantool.datamodels.users.login.UserCredentials;
+import com.indiacleantool.cleantool.datamodels.users.mobileuser.MobileUser;
+import com.indiacleantool.cleantool.exceptions.common.CommonGenericException;
+import com.indiacleantool.cleantool.exceptions.userexception.mobile.MobileUserCodeException;
+import com.indiacleantool.cleantool.security.SecurityConstants;
+import com.indiacleantool.cleantool.usermanagment.UserCredentialsRepository;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,25 +32,31 @@ public class MobileUserService {
 
     public MobileUser saveOrUpdateMobileUser(MobileUser mobileUser){
 
-        Long id = mobileUser.getId();
-        MobileUser saveMobileUser = mobileUserRepository.save(mobileUser);
+        try{
+            Long id = mobileUser.getId();
+            MobileUser saveMobileUser = mobileUserRepository.save(mobileUser);
 
-        if(id==null){
+            if(id==null){
 
-            String mobileUserCode = mobileUserRepository.generateMobileUserCode(saveMobileUser.getId());
-            saveMobileUser.setMobileUserCode(mobileUserCode);
+                String mobileUserCode = mobileUserRepository.generateMobileUserCode(saveMobileUser.getId());
+                saveMobileUser.setMobileUserCode(mobileUserCode);
 
-            UserCredentials userCredentials = new UserCredentials(mobileUserCode, Constants.InitialPassword);
-            userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));
-            List<Role> roles = new ArrayList<>();
-            Role role=new Role(SecurityConstants.ROLE_MOBILE_USER);
-            roles.add(role);
-            userCredentials.setRoles(roles);
-            userCredentials.setMobileUser(mobileUser);
-            userCredentialsRepository.save(userCredentials);
+                UserCredentials userCredentials = new UserCredentials(mobileUserCode, Constants.InitialPassword);
+                userCredentials.setPassword(bCryptPasswordEncoder.encode(userCredentials.getPassword()));
+                List<Role> roles = new ArrayList<>();
+                Role role=new Role(SecurityConstants.ROLE_MOBILE_USER);
+                roles.add(role);
+                userCredentials.setRoles(roles);
+                userCredentials.setMobileUser(mobileUser);
+                userCredentialsRepository.save(userCredentials);
 
+            }
+            return saveMobileUser;
+        }catch (DataIntegrityViolationException e){
+            throw new CommonGenericException("Email and Mobile number are already registered");
+        }catch (Exception e){
+            throw new CommonGenericException("Error while saving data");
         }
-        return saveMobileUser;
     }
 
 

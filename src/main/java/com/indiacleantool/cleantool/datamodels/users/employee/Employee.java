@@ -45,9 +45,12 @@ public class Employee  {
 
     @NotBlank(message = "Mobile number cannot be blank")
     @Size(min = 10,max = 10,message = "Mobile number should be 10 digits")
+    @Column(unique = true)
     private String mobile;
 
     @NotBlank(message = "Email cannot be blank")
+    @Size(min = 5,max = 50,message = "Email cannot be blank")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "Area of working cannot be blank")

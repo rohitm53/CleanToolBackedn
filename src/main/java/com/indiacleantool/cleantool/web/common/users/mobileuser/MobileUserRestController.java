@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/users/mobileuser")
+@RequestMapping("/api/users/mobile-user")
 public class MobileUserRestController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange;
+package com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.assignemployee;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;

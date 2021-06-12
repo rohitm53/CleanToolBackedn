@@ -1,11 +1,14 @@
 package com.indiacleantool.cleantool.datamodels.users.mobileuser;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -31,27 +34,28 @@ public class MobileUser {
     @NotBlank(message = "Last Name cannot be blank")
     private String lastName;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    @NotNull(message = "Select date of birth")
-    private Date dateOfBirth;
+    @NotNull(message = "Date of birth cannot be empty")
+    @JsonFormat(pattern = "yyyy-MM-dd",shape=JsonFormat.Shape.STRING)
+    @JsonSerialize(using = ToStringSerializer.class)
+    private LocalDate dateOfBirth;
 
     @NotBlank(message = "Mobile number cannot be blank")
     @Size(min = 10,max = 10,message = "Mobile number should be 10 digits")
+    @Column(unique = true)
     private String mobile;
 
     @NotBlank(message = "Email cannot be blank")
+    @Size(min = 5,max = 50,message = "Email cannot be blank")
+    @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "Adress cannot be blank")
-    private String address;
 
     private String mobileUserCode;
 
-
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date created_at;
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updated_at;
 
     public Long getId() {
@@ -79,11 +83,11 @@ public class MobileUser {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -101,14 +105,6 @@ public class MobileUser {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getMobileUserCode() {

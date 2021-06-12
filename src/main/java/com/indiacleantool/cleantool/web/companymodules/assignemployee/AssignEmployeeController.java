@@ -1,6 +1,7 @@
 package com.indiacleantool.cleantool.web.companymodules.assignemployee;
 
-import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.assignemployee.AssignEmployeeRequest;
+import com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.availableemployee.AvailableEmployeeRequest;
 import com.indiacleantool.cleantool.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,18 @@ public class AssignEmployeeController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllCompanyServiceRequest(Principal principal){
         return new ResponseEntity<>(assignEmployeeService.getAllCompanyServiceRequest(principal.getName()), HttpStatus.OK);
+    }
+
+    @PostMapping("/available-employee")
+    public ResponseEntity<?> getAllCompanyAvailableEmployee(@Valid @RequestBody AvailableEmployeeRequest request,
+                                                            BindingResult result,
+                                                            Principal principal){
+        ResponseEntity<?> errorMap = mapValidationExceptionService.validateRESTRequest(result);
+        if(errorMap!=null){
+            return errorMap;
+        }
+        request.setCompanyCode(principal.getName());
+        return new ResponseEntity<>(assignEmployeeService.getAllCompanyAvailableEmployee(request),HttpStatus.OK);
     }
 
     @PostMapping("/assignee-employee")

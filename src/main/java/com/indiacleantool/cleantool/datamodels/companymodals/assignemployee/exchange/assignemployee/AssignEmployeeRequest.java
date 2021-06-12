@@ -1,4 +1,4 @@
-package com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange;
+package com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.exchange.assignemployee;
 
 import javax.validation.constraints.NotBlank;
 

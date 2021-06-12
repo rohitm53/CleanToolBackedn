@@ -3,6 +3,8 @@ package com.indiacleantool.cleantool.datamodels.companymodals.assignemployee.ent
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Entity
@@ -13,7 +15,7 @@ public class EmployeeAssignedServiceEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String serviceCode;
+    private String serviceReqCode;
 
     private String companyCode;
 
@@ -23,9 +25,11 @@ public class EmployeeAssignedServiceEntity {
 
     private String timeSlotCode;
 
-    private Date scheduledDate;
+    private LocalDate scheduledDate;
 
-    private String scheduledTime;
+    private LocalTime scheduledTime;
+
+    private LocalTime expectedCompletionTime;
 
     private boolean isStarted;
 
@@ -46,12 +50,12 @@ public class EmployeeAssignedServiceEntity {
         this.id = id;
     }
 
-    public String getServiceCode() {
-        return serviceCode;
+    public String getServiceReqCode() {
+        return serviceReqCode;
     }
 
-    public void setServiceCode(String serviceCode) {
-        this.serviceCode = serviceCode;
+    public void setServiceReqCode(String serviceReqCode) {
+        this.serviceReqCode = serviceReqCode;
     }
 
     public String getCompanyCode() {
@@ -86,20 +90,28 @@ public class EmployeeAssignedServiceEntity {
         this.timeSlotCode = timeSlotCode;
     }
 
-    public Date getScheduledDate() {
+    public LocalDate getScheduledDate() {
         return scheduledDate;
     }
 
-    public void setScheduledDate(Date scheduledDate) {
+    public void setScheduledDate(LocalDate scheduledDate) {
         this.scheduledDate = scheduledDate;
     }
 
-    public String getScheduledTime() {
+    public LocalTime getScheduledTime() {
         return scheduledTime;
     }
 
-    public void setScheduledTime(String scheduledTime) {
+    public void setScheduledTime(LocalTime scheduledTime) {
         this.scheduledTime = scheduledTime;
+    }
+
+    public LocalTime getExpectedCompletionTime() {
+        return expectedCompletionTime;
+    }
+
+    public void setExpectedCompletionTime(LocalTime expectedCompletionTime) {
+        this.expectedCompletionTime = expectedCompletionTime;
     }
 
     public boolean isStarted() {
