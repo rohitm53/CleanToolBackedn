@@ -22,14 +22,6 @@ public class Services {
     @NotBlank(message = "Service name cannot be blank")
     private String serviceName;
 
-    private int noOfEmpReq;
-
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date create_at;
-
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date updated_at;
-
 
     public Long getId() {
         return id;
@@ -54,41 +46,5 @@ public class Services {
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
     }
-
-    public int getNoOfEmpReq() {
-        return noOfEmpReq;
-    }
-
-    public void setNoOfEmpReq(int noOfEmpReq) {
-        this.noOfEmpReq = noOfEmpReq;
-    }
-
-    public Date getCreate_at() {
-        return create_at;
-    }
-
-    public void setCreate_at(Date create_at) {
-        this.create_at = create_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-    public void setUpdated_at(Date updated_at) {
-        this.updated_at = updated_at;
-    }
-
-    @PrePersist
-    protected void onCreate(){
-        this.create_at = new Date();
-    }
-
-    @PreUpdate
-    protected void onUpdate(){
-        this.updated_at=new Date();
-    }
-
-
 
 }

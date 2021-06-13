@@ -6,23 +6,10 @@ import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GenericResponse<T> {
 
-    private Error error;
     private T response;
 
     public GenericResponse(T response) {
         this.response = response;
-    }
-
-    public GenericResponse(Error error) {
-        this.error = error;
-    }
-
-    public Error getError() {
-        return error;
-    }
-
-    public void setError(Error error) {
-        this.error = error;
     }
 
     public T getResponse() {

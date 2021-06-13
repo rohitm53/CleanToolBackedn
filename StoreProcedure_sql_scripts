@@ -202,23 +202,30 @@ call sp_generateMobileUserCode(1,@out_mobile_user_code);
 
 7. SP to insert time slots master data
 
-    DELIMITER $$
-    drop procedure if exists sp_TimeSlot_Master;
-    CREATE  PROCEDURE `sp_TimeSlot_Master`()
-    begin
-                    TRUNCATE TABLE time_slots;
-                    insert into time_slots(slot_code,time) values('T1',(NOW() + interval 1 hour));
-                    insert into time_slots(slot_code,time) values('T2',(NOW() + interval 2 hour));
-                    insert into time_slots(slot_code,time) values('T3',(NOW() + interval 3 hour));
-                    insert into time_slots(slot_code,time) values('T4',(NOW() + interval 4 hour));
-                    insert into time_slots(slot_code,time) values('T5',(NOW() + interval 5 hour));
-                    insert into time_slots(slot_code,time) values('T6',(NOW() + interval 6 hour));
-                    insert into time_slots(slot_code,time) values('T7',(NOW() + interval 7 hour));
-                    insert into time_slots(slot_code,time) values('T8',(NOW() + interval 8 hour));
+   DROP PROCEDURE IF EXISTS sp_TimeSlot_Master;
+   DELIMITER //
+   CREATE PROCEDURE sp_TimeSlot_Master()
+   BEGIN
 
-                    commit;
-                end$$
-    DELIMITER ;
+           DECLARE the_time TIME ;
+
+           SET the_time = time('08:00:00');
+
+   		TRUNCATE TABLE time_slot;
+   		insert into time_slot(slot_code,slot_time) values('T1',the_time );
+   		insert into time_slot(slot_code,slot_time) values('T2',(the_time + interval 1 hour));
+   		insert into time_slot(slot_code,slot_time) values('T3',(the_time + interval 2 hour));
+   		insert into time_slot(slot_code,slot_time) values('T4',(the_time + interval 3 hour));
+   		insert into time_slot(slot_code,slot_time) values('T5',(the_time + interval 4 hour));
+   		insert into time_slot(slot_code,slot_time) values('T6',(the_time + interval 5 hour));
+   		insert into time_slot(slot_code,slot_time) values('T7',(the_time + interval 6 hour));
+   		insert into time_slot(slot_code,slot_time) values('T8',(the_time + interval 7 hour));
+           insert into time_slot(slot_code,slot_time) values('T8',(the_time + interval 8 hour));
+
+   	COMMIT;
+   END//
+   DELIMITER ;
+
 
 ------------------------------------------------------------------------------------------------------------------------
 

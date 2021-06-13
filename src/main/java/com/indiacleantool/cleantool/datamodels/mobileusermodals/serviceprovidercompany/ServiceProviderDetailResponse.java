@@ -9,7 +9,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceProviderDetailResponse {
 
-    @JsonProperty("serviceProviderCompanyDetails")
+    @JsonProperty("company-details")
     private List<ServiceProviderCompanyDetails> listServiceProviderCompanyDetails;
     private Error error;
 

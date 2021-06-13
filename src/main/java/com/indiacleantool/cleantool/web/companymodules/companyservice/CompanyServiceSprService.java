@@ -20,16 +20,16 @@ public class CompanyServiceSprService {
     @Autowired
     private StaticServiceRepository staticServiceRepository;
 
-    public Iterable<CompanyService> saveCompanyService(String compananyCode , List<String> listServiceCode){
+    public Iterable<CompanyService> saveCompanyService(String companyCode , List<String> listServiceCode){
 
         if(listServiceCode==null){
             throw new CompanyServiceException("No Service code list available");
         }
-        repository.deleteCompanyServiceByCompanyCode(compananyCode);
+        repository.deleteCompanyServiceByCompanyCode(companyCode);
         List<CompanyService> listCompanyService = new ArrayList<>();
         for(String serviceCode : listServiceCode){
             CompanyService companyService = new CompanyService();
-            companyService.setCompanyCode(compananyCode);
+            companyService.setCompanyCode(companyCode);
             companyService.setServiceCode(serviceCode);
             listCompanyService.add(companyService);
         }

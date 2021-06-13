@@ -1,5 +1,6 @@
 package com.indiacleantool.cleantool.web.mobileuersmodules.servicedetails;
 
+import com.indiacleantool.cleantool.exceptions.common.CommonGenericException;
 import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
 import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
@@ -20,27 +21,34 @@ import java.util.List;
 public class ServiceDetailsSprService {
 
     @Autowired
-    private CompanyServiceSprService companyServiceSprService;
+    private ServiceDetailsDao serviceDetailsDao;
 
-    @Autowired
-    private CompanyService companyService;
-
-    @Autowired
-    private EmployeeServiceSprService employeeServiceSprService;
-
-
-    @Autowired
-    private TimeSlotsService timeSlotsService;
-
-
-    public ServiceProviderDetailResponse getServiceDetailsByServiceCode(String service_code){
+    public ServiceProviderDetailResponse getServiceProviderCompanyList(String serviceCode , String date){
 
         ServiceProviderDetailResponse response =null;
 
-        List<TimeSlot> timeSlotList = timeSlotsService.findAll();
+        try{
+            List<Company> companyList = serviceDetailsDao.getAvailableCompanyByServiceCode(serviceCode);
+            List<ServiceProviderCompanyDetails> listServiceProviderCompanyDetails = new ArrayList<>();
+            for(Company company : companyList){
 
+                List<TimeSlot> timeSlotList = serviceDetailsDao.getAvailableTimeSlots(company.getCompanyCode(),date);
 
+                if(timeSlotList!=null && timeSlotList.size()>0){
+                    ServiceProviderCompanyDetails serviceProviderCompanyDetails = new ServiceProviderCompanyDetails(
+                            company,
+                            1L,
+                            timeSlotList
+                    );
+                    listServiceProviderCompanyDetails.add(serviceProviderCompanyDetails);
+                }
+            }
+            response = new ServiceProviderDetailResponse(listServiceProviderCompanyDetails);
 
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new CommonGenericException("No Data Available");
+        }
 
         return response;
     }

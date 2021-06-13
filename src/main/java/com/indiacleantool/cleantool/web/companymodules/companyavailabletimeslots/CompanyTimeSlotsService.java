@@ -67,13 +67,9 @@ public class CompanyTimeSlotsService {
             );
 
             if(availableSlots==null || availableSlots.size()==0){
-                response = new GenericResponse<>(
-                        "No Static time slots available"
-                );
+              throw new CommonGenericException("No Static time slots available");
             }else if(employeeCount==0){
-                response = new GenericResponse<>(
-                        "No Employee available for company : "+companyCode
-                );
+                throw new CommonGenericException("No Employee available for company : "+companyCode);
             }else{
                 List<CompanyTimeSlotsEntity> companyTimeSlots = new ArrayList<>();
                 for(TimeSlot timeSlot : availableSlots){
@@ -95,7 +91,7 @@ public class CompanyTimeSlotsService {
             if(e instanceof DateTimeParseException){
                 throw new CommonGenericException("Invalid date/time");
             }else{
-                throw new CommonGenericException("SQL Exception");
+                throw new CommonGenericException(e.getMessage());
             }
         }
         return response;
