@@ -38,7 +38,8 @@ public class AssignEmployeeService {
 
         List<Employee> availableEmp = employeeSprService.getAllCompanyAvailableEmployee(
                             request.getCompanyCode(),
-                            request.getDate());
+                            request.getDate()
+        );
 
         AvailableEmployeeResponse response = new AvailableEmployeeResponse(availableEmp);
 

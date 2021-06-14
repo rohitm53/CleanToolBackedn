@@ -13,6 +13,8 @@ import java.util.StringJoiner;
 public class ServiceDetailsDao extends BaseDao {
 
 
+
+
     public List<Company> getAvailableCompanyByServiceCode(String serviceCode){
 
         StringJoiner query = new StringJoiner(" ");

@@ -112,7 +112,8 @@ public class EmployeeSprService {
             StringJoiner query = new StringJoiner(" ");
 
             query
-                    .add("select * from employee where employee_code not in ")
+                    .add("select * from employee where company_code = :company_code ")
+                    .add(" and employee_code not in ")
                     .add(" ( ")
                     .add(" select emp_code from employee_assigned_service where ")
                     .add(" company_code = :company_code ")

@@ -1,6 +1,8 @@
 package com.indiacleantool.cleantool.web.mobileuersmodules.servicedetails;
 
+import com.indiacleantool.cleantool.datamodels.users.employee.Employee;
 import com.indiacleantool.cleantool.exceptions.common.CommonGenericException;
+import com.indiacleantool.cleantool.web.companymodules.employees.EmployeeSprService;
 import com.indiacleantool.cleantool.web.companymodules.timeslots.TimeSlotsService;
 import com.indiacleantool.cleantool.datamodels.common.errormodels.Error;
 import com.indiacleantool.cleantool.datamodels.common.timeslots.TimeSlot;
@@ -23,6 +25,8 @@ public class ServiceDetailsSprService {
     @Autowired
     private ServiceDetailsDao serviceDetailsDao;
 
+
+
     public ServiceProviderDetailResponse getServiceProviderCompanyList(String serviceCode , String date){
 
         ServiceProviderDetailResponse response =null;
@@ -33,15 +37,11 @@ public class ServiceDetailsSprService {
             for(Company company : companyList){
 
                 List<TimeSlot> timeSlotList = serviceDetailsDao.getAvailableTimeSlots(company.getCompanyCode(),date);
-
-                if(timeSlotList!=null && timeSlotList.size()>0){
                     ServiceProviderCompanyDetails serviceProviderCompanyDetails = new ServiceProviderCompanyDetails(
                             company,
-                            1L,
-                            timeSlotList
+                            !(timeSlotList==null || timeSlotList.size()==0) ? timeSlotList : new ArrayList<>()
                     );
                     listServiceProviderCompanyDetails.add(serviceProviderCompanyDetails);
-                }
             }
             response = new ServiceProviderDetailResponse(listServiceProviderCompanyDetails);
 

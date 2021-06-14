@@ -7,12 +7,10 @@ import java.util.List;
 
 public class ServiceProviderCompanyDetails {
     private Company company;
-    private Long availableEmployeeCount;
     private List<TimeSlot> timeSlots;
 
-    public ServiceProviderCompanyDetails(Company company, Long availableEmployeeCount, List<TimeSlot> timeSlots) {
+    public ServiceProviderCompanyDetails(Company company, List<TimeSlot> timeSlots) {
         this.company = company;
-        this.availableEmployeeCount = availableEmployeeCount;
         this.timeSlots = timeSlots;
     }
 
@@ -22,14 +20,6 @@ public class ServiceProviderCompanyDetails {
 
     public void setCompany(Company company) {
         this.company = company;
-    }
-
-    public Long getAvailableEmployeeCount() {
-        return availableEmployeeCount;
-    }
-
-    public void setAvailableEmployeeCount(Long availableEmployeeCount) {
-        this.availableEmployeeCount = availableEmployeeCount;
     }
 
     public List<TimeSlot> getTimeSlots() {
