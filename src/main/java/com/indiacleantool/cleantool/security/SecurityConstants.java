@@ -13,7 +13,7 @@ public class SecurityConstants {
     public static final String MOBILE_API_ENDPOINT="/api/mobile/**";
     public static final String EMPLOYEE_API_ENDPOINT="/api/employee/**";
 
-    public static final String SERVICE_REQUEST_API_ENDPOINT="/api/servicerequest/**";
+    public static final String SERVICE_REQUEST_API_ENDPOINT="/api/service-request/**";
 
     //Roles
     public static final String ROLE_COMPANY="COMPANY";

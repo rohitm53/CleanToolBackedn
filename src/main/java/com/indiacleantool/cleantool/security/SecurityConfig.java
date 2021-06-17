@@ -5,6 +5,7 @@ import com.indiacleantool.cleantool.usermanagment.AppUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AppUserDetailService appUserDetailService;
@@ -45,12 +46,14 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                   .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                   .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                   .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                    .and()
-                       .authorizeRequests().antMatchers(
+                       .authorizeRequests().antMatchers(HttpMethod.GET,
                                 "/",
                                 "/favicon.ico",
                                 "/**/*.png",
+                                "/manifest.json",
                                 "/**/*.gif",
                                 "/**/*.svg",
                                 "/**/*.jpg",
@@ -60,15 +63,12 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                         ).permitAll()
                        .antMatchers(SecurityConstants.ACTUATOR_ENDPOINT).permitAll()
                        .antMatchers(SecurityConstants.COMMON_USER_ENDPOINT,SecurityConstants.STATIC_SERVICE_ENDPOINT).permitAll()
-
                        .antMatchers(SecurityConstants.SERVICE_REQUEST_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY,
                                             SecurityConstants.ROLE_MOBILE_USER,SecurityConstants.ROLE_EMPLOYEE)
-
                        .antMatchers(SecurityConstants.COMPANY_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_COMPANY)
                        .antMatchers(SecurityConstants.MOBILE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_MOBILE_USER)
                        .antMatchers(SecurityConstants.EMPLOYEE_API_ENDPOINT).hasAnyRole(SecurityConstants.ROLE_EMPLOYEE)
-                       .anyRequest().authenticated()
-                   .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                       .anyRequest().authenticated();
 
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
