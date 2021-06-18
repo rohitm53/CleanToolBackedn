@@ -22,13 +22,15 @@ public class EmployeeController {
     private MapValidationExceptionService mapValidationExceptionService;
 
     @PostMapping
-    public ResponseEntity<?> createOrSaveEmployee(@Valid @RequestBody Employee employee , BindingResult result){
+    public ResponseEntity<?> createOrSaveEmployee(@Valid @RequestBody Employee employee ,
+                                                  BindingResult result,
+                                                  Principal principal){
 
         ResponseEntity<?> errorMap = mapValidationExceptionService.validateRESTRequest(result);
         if(errorMap!=null){
             return errorMap;
         }
-        Employee employee1 = service.saveOrUpdateEmployee(employee);
+        Employee employee1 = service.saveOrUpdateEmployee(employee,principal.getName());
         return new ResponseEntity<>(employee1, HttpStatus.OK);
 
     }
@@ -49,8 +51,8 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeCode}")
-    public ResponseEntity<?> deleteEmployeeByCode(@PathVariable String employeeCode){
-        service.deleteEmployeeByCode(employeeCode);
+    public ResponseEntity<?> deleteEmployeeByCode(@PathVariable String employeeCode , Principal principal){
+        service.deleteEmployeeByCode(employeeCode , principal.getName());
         return new ResponseEntity<>("Employee with code : "+employeeCode+" has been deleted",HttpStatus.OK);
     }
 }

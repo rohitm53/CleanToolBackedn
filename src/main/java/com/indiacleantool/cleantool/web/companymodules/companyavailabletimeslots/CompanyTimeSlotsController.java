@@ -46,10 +46,10 @@ public class CompanyTimeSlotsController {
             @PathVariable String date,
             Principal principal
     ){
-        return new ResponseEntity<>(service.getAllCompanyAvailableTimeSlotsByDate(
-                principal.getName(),
-                date
-        ),HttpStatus.OK);
+        return new ResponseEntity<>(
+                service.getAllCompanyAvailableTimeSlotsByDate(principal.getName(), date),
+                HttpStatus.OK
+        );
     }
 
 }

@@ -18,13 +18,4 @@ public interface TimeSlotsRepository extends CrudRepository<TimeSlot,Long> {
     @Query(value = "truncate table time_slot" , nativeQuery = true)
     void truncateTimeSlots();
 
-    @Query(value = "select * from time_slot where time(slot_time) " +
-            " between cast(:startTime as time) and cast(:endTime as time) " +
-            " order by slot_time asc " ,nativeQuery = true)
-    List<TimeSlot> getTimeSlotByStartNEndTime(
-            @Param("startTime") String startTime ,
-            @Param("endTime") String endTime
-    );
-
-
 }

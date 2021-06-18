@@ -36,6 +36,9 @@ public class CompanyTimeSlotsService {
     @Autowired
     private EmployeeSprService employeeSprService;
 
+    @Autowired
+    private CompanyTimeSlotsDao companyTimeSlotsDao;
+
 
 
     public CompanyTimeSlotsEntity saveCompanyTimeSlots(CompanyTimeSlotsEntity companyTimeSlotsEntity){
@@ -111,5 +114,9 @@ public class CompanyTimeSlotsService {
 
     public CompanyTimeSlotsEntity getByCompanyCodeNDateNTimeSlotCode(String companyCode , String date , String timeSlotCode){
         return repository.getByCompanyCodeNDateNTimeSlotCode(companyCode,date,timeSlotCode);
+    }
+
+    public boolean updateEmployeeCountInCompanyTimeSlots(String companyCode , boolean isIncrement){
+        return companyTimeSlotsDao.updateEmployeeCountInCompanyTimeSlots(companyCode , isIncrement);
     }
 }

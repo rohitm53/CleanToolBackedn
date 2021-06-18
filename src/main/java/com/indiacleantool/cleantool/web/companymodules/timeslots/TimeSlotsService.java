@@ -16,6 +16,9 @@ public class TimeSlotsService {
     @Autowired
     private TimeSlotsRepository repository;
 
+    @Autowired
+    private TimeSlotDao timeSlotDao;
+
     public List<TimeSlot> findAll(){
         List<TimeSlot> timeSlotList = new ArrayList<>();
         repository.findAll().forEach(timeSlotList::add);
@@ -46,7 +49,7 @@ public class TimeSlotsService {
     }
 
     public List<TimeSlot> getTimeSlotByStartNEndTime(String startTime , String endTime ){
-        return repository.getTimeSlotByStartNEndTime(startTime,endTime);
+        return timeSlotDao.getTimeSlotByStartNEndTime(startTime,endTime);
     }
 
     public String getNextTimeSlot(String scheduleTimeSlotCode) {

@@ -19,10 +19,10 @@ public class ServiceDetailsDao extends BaseDao {
 
         StringJoiner query = new StringJoiner(" ");
         query
-                .add(" SELECT CU.* from COMPANY_USER CU ")
-                .add(" INNER JOIN COMPANY_SERVICE CS ON CU.COMPANY_CODE=CS.COMPANY_CODE ")
-                .add(" INNER JOIN SERVICES S ON S.SERVICE_CODE=CS.SERVICE_CODE ")
-                .add(" WHERE  S.SERVICE_CODE = :serviceCode ");
+                .add(" SELECT CU.* from company_user CU ")
+                .add(" INNER JOIN company_service CS ON CU.company_code=CS.company_code ")
+                .add(" INNER JOIN services S ON S.service_code=CS.service_code ")
+                .add(" WHERE  S.service_code = :serviceCode ");
 
         Query nativeQuery = getEntityManager().createNativeQuery(query.toString(),Company.class);
         nativeQuery.setParameter("serviceCode",serviceCode);

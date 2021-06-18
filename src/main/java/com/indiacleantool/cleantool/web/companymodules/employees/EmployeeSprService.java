@@ -8,6 +8,7 @@ import com.indiacleantool.cleantool.datamodels.users.employee.Employee;
 import com.indiacleantool.cleantool.datamodels.users.login.Role;
 import com.indiacleantool.cleantool.datamodels.users.login.UserCredentials;
 import com.indiacleantool.cleantool.exceptions.userexception.employees.EmployeeCodeException;
+import com.indiacleantool.cleantool.web.companymodules.companyavailabletimeslots.CompanyTimeSlotsService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -39,10 +41,15 @@ public class EmployeeSprService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    private CompanyTimeSlotsService companyTimeSlotsService;
 
-    public Employee saveOrUpdateEmployee(Employee employee){
+    @Autowired
+    private EmployeeDao employeeDao;
+
+
+    @Transactional
+    public Employee saveOrUpdateEmployee(Employee employee, String companyCode){
 
         try{
             Long id = employee.getId();
@@ -59,6 +66,10 @@ public class EmployeeSprService {
                 userCredentials.setRoles(roles);
                 userCredentials.setEmployee(savedEmployee);
                 userCredentialsRepository.save(userCredentials);
+
+                ///Incrementing Available Employee Count in CompanyAvailableTimeSlots table
+                companyTimeSlotsService.updateEmployeeCountInCompanyTimeSlots(companyCode , true);
+
             }
             return savedEmployee;
         }catch (DataIntegrityViolationException e){
@@ -83,10 +94,13 @@ public class EmployeeSprService {
         return repository.findAllByCompanyCode(companyCode);
     }
 
-    public void deleteEmployeeByCode(String employeeCode){
+    @Transactional
+    public void deleteEmployeeByCode(String employeeCode, String companyCode ){
         Employee employee = findByEmployeeCode(employeeCode);
         if(employee!=null){
             repository.delete(employee);
+            ///Decrement Available Employee Count in CompanyAvailableTimeSlots table
+            companyTimeSlotsService.updateEmployeeCountInCompanyTimeSlots(companyCode , false);
         }
     }
 
@@ -106,31 +120,10 @@ public class EmployeeSprService {
 
     public List<Employee> getAllCompanyAvailableEmployee(String companyCode, String strDate){
         try  {
-
-            LocalDate date = LocalDate.parse(strDate);
-
-            StringJoiner query = new StringJoiner(" ");
-
-            query
-                    .add("select * from employee where company_code = :company_code ")
-                    .add(" and employee_code not in ")
-                    .add(" ( ")
-                    .add(" select emp_code from employee_assigned_service where ")
-                    .add(" company_code = :company_code ")
-                    .add(" and is_completed = 0 and ")
-                    .add(" date(scheduled_date) = :date")
-                    .add(" ) ");
-
-            Query nativeQuery = entityManager.createNativeQuery(query.toString(),Employee.class);
-            nativeQuery.setParameter("company_code",companyCode);
-            nativeQuery.setParameter("date",date.toString());
-
-            return nativeQuery.getResultList();
-
+            return employeeDao.getAllCompanyAvailableEmployee(companyCode,strDate);
         } catch (DateTimeParseException e) {
             throw new CommonGenericException("Invalid date/time");
         } catch (Exception e) {
-            e.printStackTrace();
             throw new CommonGenericException(e.getMessage());
         }
     }

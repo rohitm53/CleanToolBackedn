@@ -1,5 +1,7 @@
 package com.indiacleantool.cleantool.datamodels.common.timeslots;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
