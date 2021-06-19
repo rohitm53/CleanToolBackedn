@@ -1,7 +1,7 @@
 package com.indiacleantool.cleantool.security;
 
 import com.google.gson.Gson;
-import com.indiacleantool.cleantool.web.exceptions.userexception.InvalidLoginResponse;
+import com.indiacleantool.cleantool.exceptions.userexception.InvalidLoginResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

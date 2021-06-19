@@ -1,8 +1,8 @@
 package com.indiacleantool.cleantool.usermanagment;
 
-import com.indiacleantool.cleantool.web.domain.users.login.LoginRequest;
-import com.indiacleantool.cleantool.web.domain.users.login.LoginResponse;
-import com.indiacleantool.cleantool.web.exceptions.MapValidationExceptionService;
+import com.indiacleantool.cleantool.datamodels.users.login.LoginRequest;
+import com.indiacleantool.cleantool.datamodels.users.login.LoginResponse;
+import com.indiacleantool.cleantool.exceptions.MapValidationExceptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

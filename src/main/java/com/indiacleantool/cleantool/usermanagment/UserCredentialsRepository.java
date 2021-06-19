@@ -1,11 +1,11 @@
 package com.indiacleantool.cleantool.usermanagment;
 
-import com.indiacleantool.cleantool.web.domain.users.UserCredentials;
+import com.indiacleantool.cleantool.datamodels.users.login.UserCredentials;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserCredentialsRepository extends CrudRepository<UserCredentials,Long> {
 
-    UserCredentials findByusername(String username);
+    UserCredentials findByusernameIgnoreCase(String username);
 }

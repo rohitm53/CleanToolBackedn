@@ -13,7 +13,6 @@ public class CleanToolApplication {
         return new BCryptPasswordEncoder();
     }
 
-
     public static void main(String[] args) {
         SpringApplication.run(CleanToolApplication.class,args);
     }
