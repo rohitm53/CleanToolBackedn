@@ -1,3 +1,10 @@
 cleantool.iml
 .idea/
 /target
+/bin
+/logs
+/.settings/
+/.vscode/
+
+.classpath
+.project
